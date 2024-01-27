@@ -34,6 +34,14 @@ const config: Config = {
       //   "gradient-conic":
       //     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       // },
+      gridTemplateColumns: {
+        'md-body': '10rem 1fr',
+        'body': '6rem 1fr'
+        
+      },
+      gridTemplateRows: {
+        'body': '5rem 1fr'
+      }
     },
   },
   plugins: [],
