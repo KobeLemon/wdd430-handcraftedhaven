@@ -15,6 +15,8 @@
     "next-auth": "^5.0.0-beta.5",
     "react": "^18",
     "react-dom": "^18",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -25,8 +27,6 @@
     "dotenv": "^16.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }
