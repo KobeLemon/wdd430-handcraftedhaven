@@ -17,9 +17,9 @@ export default function SidenavLinks(){
             {links.map((link) => {
                 const LinkIcon = link.icon;
                 return (
-                    <Link href={link.href} key={link.name} className='flex h-[48px] grow items-centerjustify-center m-0 justify-center gap-3 rounded-md bg-light-grayish-blue p-3 text-sm font-medium w-full hover:bg-grayish-blue hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
+                    <Link href={link.href} key={link.name} className='flex h-[48px] grow items-center m-0 justify-center gap-3 rounded-md bg-light-grayish-blue p-3 text-sm font-medium w-full hover:bg-grayish-blue hover:text-blue-600 md:justify-center md:p-2 md:px-3 lg:flex-none lg:justify-start'>
                         <LinkIcon className="w-6" />
-                        <p className="hidden md:block">{link.name}</p>
+                        <p className="hidden lg:block">{link.name}</p>
                     </Link>
                 )
             })}

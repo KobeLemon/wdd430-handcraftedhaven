@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-body grid-rows-body md:flex-row md:overflow-hidden md:grid-cols-md-body`}>
+      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-sm-body grid-rows-body md:flex-row md:overflow-hidden md:grid-cols-md-body lg:grid-cols-lg-body`}>
           <Nav/>
 
         <SideNav/>
