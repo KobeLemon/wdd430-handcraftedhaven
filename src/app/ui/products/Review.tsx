@@ -41,4 +41,4 @@ export default function Review( { date, fullName, review } : { date: Date, fullN
 
   )
 
-} 
+}

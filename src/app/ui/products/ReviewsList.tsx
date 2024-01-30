@@ -9,11 +9,13 @@ export default function ReviewsList( { list } : { list: Object[] } ) {
 
       {
 
-        list.map( ({ date, fullName, review }) => {
+        list.map( ({ id, date, fullName, review } : { id: number, date: Date, fullName: string, review: string } ) => {
 
           return (
 
-            <Review 
+            <Review
+            
+              key={id}
               
               date={date} 
               
@@ -33,4 +35,5 @@ export default function ReviewsList( { list } : { list: Object[] } ) {
 
   )
 
-} 
+}
+

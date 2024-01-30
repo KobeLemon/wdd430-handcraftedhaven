@@ -1,7 +1,5 @@
-'use client';
 
-import { useRef } from 'react';
-import Image from 'next/image';
+import { StaticImageData } from 'next/image';
 import artOneImage from '../../../../public/images/art-1.jpg';
 import artTwoImage from '../../../../public/images/art-2.jpg';
 import artThreeImage from '../../../../public/images/art-3.jpg';
@@ -12,22 +10,26 @@ import artThreeThumbnail from '../../../../public/thumbnails/art-3.jpg';
 import artFourThumbnail from '../../../../public/thumbnails/art-4.jpg';
 import { ShoppingCartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import ReviewsList from '@/app/ui/products/ReviewsList';
+import ProductTab from '@/app/ui/products/ProductTab';
 
 const reviews : Object[] = [
 
   {
+    id: 1,
     date: '02-25-2022',
     fullName: 'John Doe',
     review: 'hic atque similique tempora autem eum, corrupti voluptas dolorem harum officia! Dolores incidunt a deserunt nostrum'
   },
 
   {
+    id: 2,
     date: '01-25-2023',
     fullName: 'Jane Doe',
     review: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aperiam deleniti voluptates delectus excepturi'
   },
 
   {
+    id: 3,
     date: '10-25-2023',
     fullName: 'Matt Simpson',
     review: 'Deleniti sit commodi nesciunt tempora sequi, possimus accusamus aut dicta laboriosam accusantium quibusdam perspiciatis voluptas nisi'
@@ -37,139 +39,25 @@ const reviews : Object[] = [
 
 export default function Page() {
 
-  const carouselItemsContainerRef = useRef( null );
+  const tabImages : StaticImageData[] = [artOneImage, artTwoImage, artThreeImage, artFourImage];
 
-  let carouselItems : HTMLDivElement[] = [];
-
-  const carouselTabClickHandler = ( event: Event ) : void => {
-
-    if ( ! carouselItems.length ) carouselItems = Array.from( carouselItemsContainerRef.current.children );
-
-    const target = event.target.closest( 'button' ) as HTMLButtonElement;
-
-    carouselItems.forEach( (carouselItem : HTMLDivElement) => {
-
-      carouselItem.setAttribute( 'aria-hidden', target.getAttribute( 'aria-controls' ) !== carouselItem.getAttribute( 'id' ) );
-
-    } );
-
-  }
+  const tabThumbnails : StaticImageData[] = [artOneThumbnail, artTwoThumbnail, artThreeThumbnail, artFourThumbnail];
 
   return (
 
     <div>
 
-      <div className='flex flex-col gap-10 md:flex-row'>
+      <div className='flex flex-col gap-10 mb-20 md:flex-row'>
 
-        <div className='basis-1/2 mb-20'>
+        <ProductTab
 
-          <div ref={carouselItemsContainerRef} className='grid grid-rows-1 grid-cols-1 mb-4 rounded-xl overflow-hidden'>
+          images={tabImages}
 
-            <div id='carousel-item-1' className='row-start-1 col-start-1 aria-hidden:hidden' aria-labelledby='carousel-tab-1' aria-hidden="false">
+          thumbnails={tabThumbnails}
 
-              <Image 
-              
-                src={artOneImage}
-                
-                alt='' 
-                
-              />
-              
-            </div>
+        />
 
-            <div id='carousel-item-2' className='row-start-1 col-start-1 aria-hidden:hidden' aria-labelledby='carousel-tab-2' aria-hidden="true">
-
-              <Image 
-              
-                src={artTwoImage}
-                
-                alt='' 
-                
-              />
-              
-            </div>
-
-            <div id='carousel-item-3' className='row-start-1 col-start-1 aria-hidden:hidden' aria-labelledby='carousel-tab-3' aria-hidden="true">
-
-              <Image 
-              
-                src={artThreeImage}
-                
-                alt='' 
-                
-              />
-              
-            </div>
-
-            <div id='carousel-item-4' className='row-start-1 col-start-1 aria-hidden:hidden' aria-labelledby='carousel-tab-4' aria-hidden="true">
-
-              <Image 
-              
-                src={artFourImage}
-                
-                alt='' 
-                
-              />
-              
-            </div>
-
-          </div>
-
-          <div className='flex gap-x-5 items-stretch'>
-
-            <button id='carousel-tab-1' className='rounded-xl overflow-hidden focus-visible:outline-2 focus-visible:outline focus-visible:outline-orange hover:opacity-60 transition-opacity' type='button' aria-controls='carousel-item-1' onClick={carouselTabClickHandler}>
-
-              <Image
-                className='pointer-events-none'
-                src={artOneThumbnail} 
-                alt=''
-                width={176}
-                height={176} 
-              />
-
-            </button>
-
-            <button id='carousel-tab-2' className='rounded-xl overflow-hidden focus-visible:outline-2 focus-visible:outline focus-visible:outline-orange hover:opacity-60 transition-transform' type='button' aria-controls='carousel-item-2' onClick={carouselTabClickHandler}>
-
-              <Image
-                className='pointer-events-none'
-                src={artTwoThumbnail} 
-                alt=''
-                width={176}
-                height={176} 
-              />
-
-            </button>
-
-            <button id='carousel-tab-3' className='rounded-xl overflow-hidden focus-visible:outline-2 focus-visible:outline focus-visible:outline-orange hover:opacity-60 transition-transform' type='button' aria-controls='carousel-item-3' onClick={carouselTabClickHandler}>
-
-              <Image
-                className='pointer-events-none'
-                src={artThreeThumbnail} 
-                alt=''
-                width={176}
-                height={176} 
-              />
-
-            </button>
-
-            <button id='carousel-tab-4' className='rounded-xl overflow-hidden focus-visible:outline-2 focus-visible:outline focus-visible:outline-orange hover:opacity-60 transition-transform' type='button' aria-controls='carousel-item-4' onClick={carouselTabClickHandler}>
-
-              <Image
-                className='pointer-events-none'
-                src={artFourThumbnail} 
-                alt=''
-                width={176}
-                height={176} 
-              />
-
-            </button>
-
-          </div>
-
-        </div>
-
-        <div className='basis-1/2 mb-20 sm:px-5 sm:py-2'>
+        <div className='basis-1/2 shrink-0 md:px-5 md:py-2'>
 
           <h1 className='h3 mb-1'>Lorem ipsum dolor</h1>
           <p className='mb-5'>By Adipisci Unde</p>
