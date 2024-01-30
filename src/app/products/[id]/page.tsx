@@ -1,4 +1,6 @@
+'use client';
 
+import { useState } from 'react';
 import { StaticImageData } from 'next/image';
 import artOneImage from '../../../../public/images/art-1.jpg';
 import artTwoImage from '../../../../public/images/art-2.jpg';
@@ -12,7 +14,51 @@ import { ShoppingCartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outli
 import ReviewsList from '@/app/ui/products/ReviewsList';
 import ProductTab from '@/app/ui/products/ProductTab';
 
-const reviews : Object[] = [
+interface Product {
+
+  title: string,
+
+  author: string,
+
+  description: string,
+
+  price: number,
+
+  images:  StaticImageData[],
+
+  thumbnails:  StaticImageData[]
+
+}
+
+interface Review {
+
+  id: number,
+
+  date: string,
+
+  fullName: string,
+
+  review: string
+
+}
+
+const productData : Product = {
+
+  title: 'Statue',
+
+  author: 'Adipisci Unde',
+
+  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae repellendus dolores, ut, tempore laboriosam rerum facere ab, incidunt sint esse dolore accusantium necessitatibus. Adipisci repellat ipsum tempore eum quos. Unde.',
+
+  price: 125.00,
+
+  images: [artOneImage, artTwoImage, artThreeImage, artFourImage],
+
+  thumbnails: [artOneThumbnail, artTwoThumbnail, artThreeThumbnail, artFourThumbnail]
+
+} 
+
+const reviews : Review[] = [
 
   {
     id: 1,
@@ -39,9 +85,11 @@ const reviews : Object[] = [
 
 export default function Page() {
 
-  const tabImages : StaticImageData[] = [artOneImage, artTwoImage, artThreeImage, artFourImage];
+  const [ quantity, setQuantity ] = useState( 0 );
 
-  const tabThumbnails : StaticImageData[] = [artOneThumbnail, artTwoThumbnail, artThreeThumbnail, artFourThumbnail];
+  const handleMinusButtonClick = ( event: Event ) => setQuantity( previousQuantity => previousQuantity > 0 ? --previousQuantity : 0 );
+
+  const handlePlusButtonClick = ( event: Event ) => setQuantity( previousQuantity => ++previousQuantity );
 
   return (
 
@@ -51,22 +99,24 @@ export default function Page() {
 
         <ProductTab
 
-          images={tabImages}
+          images={productData.images}
 
-          thumbnails={tabThumbnails}
+          thumbnails={productData.thumbnails}
 
         />
 
         <div className='basis-1/2 shrink-0 md:px-5 md:py-2'>
 
-          <h1 className='h3 mb-1'>Lorem ipsum dolor</h1>
-          <p className='mb-5'>By Adipisci Unde</p>
+          <h1 className='h3 mb-1'>{ productData.title }</h1>
+          <p className='mb-5'>By { productData.author }</p>
 
-          <p className='mb-8'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae repellendus dolores, ut, tempore laboriosam rerum facere ab, incidunt sint esse dolore accusantium necessitatibus. Adipisci repellat ipsum tempore eum quos. Unde.</p>
+          <p className='mb-8'>
+            { productData.description }
+          </p>
 
           <div className='mb-10 text-2xl font-bold'>
 
-            $125
+            ${ productData.price }
 
           </div>
 
@@ -74,7 +124,7 @@ export default function Page() {
 
             <div className='flex bg-light-grayish-blue'>
 
-              <button className='p-2 text-xl font-bold' type='button'>
+              <button className='p-2 text-xl font-bold rounded-tl-md rounded-bl-md hover:bg-grayish-blue' type='button' onClick={handleMinusButtonClick}>
 
                 <MinusIcon className='w-5 h-5 font-bold text-orange pointer-events-none' />
 
@@ -84,13 +134,13 @@ export default function Page() {
 
                 <span className='flex justify-center items-center font-bold h-6 w-6'>
 
-                  0
+                  { quantity }
 
                 </span>
 
               </div>
 
-              <button className='p-2 text-2xl font-bold' type='button'>
+              <button className='p-2 text-2xl font-bold rounded-tr-md rounded-br-md hover:bg-grayish-blue' type='button' onClick={handlePlusButtonClick}>
 
                 <PlusIcon className='w-5 h-5 font-bold text-orange pointer-events-none' />
 
