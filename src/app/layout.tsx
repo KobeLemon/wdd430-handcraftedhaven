@@ -21,13 +21,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-sm-body grid-rows-body md:flex-row md:overflow-hidden md:grid-cols-md-body lg:grid-cols-lg-body`}>
-          <Nav/>
+
+      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-[4rem_1fr] grid-rows-[5rem_1fr] md:flex-row md:overflow-hidden md:grid-cols-[6rem_1fr] lg:grid-cols-[10rem_1fr]`}>
+
+        <Nav/>
 
         <SideNav/>
 
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+        <div className="p-6 md:overflow-y-auto md:p-12">{children}</div>
+
       </body>
+
     </html>
   );
 }
