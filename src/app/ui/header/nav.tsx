@@ -1,7 +1,7 @@
-import ShoppingCart from "@/app/ui/shopping-cart";
-import Search from "@/app/ui/search";
-import Profile from "@/app/ui/profile";
-import Logo from "@/app/ui/logo";
+import ShoppingCart from "@/app/ui/header/shopping-cart";
+import Search from "@/app/ui/header/search";
+import Profile from "@/app/ui/header/profile";
+import Logo from "@/app/ui/header/logo";
 
 export default function Nav(){
     return (
