@@ -22,7 +22,7 @@ const heroData: HeroData = {
 
 const productsCardData = [
     {
-      href: "/products",  
+      href: "/products/1",  
       imageData: {
         src: artOneImage,
         alt: "Image 1",
@@ -31,16 +31,16 @@ const productsCardData = [
       description: "Handcrafted Ceremonial Bull Clay Scuplture",
     },
     {
-      href: "/products",  
+      href: "/products/2",  
       imageData: {
         src: artTwoImage,
         alt: "Image 2",
       },
       subHeader: "Cement Jar",
-      description: "A handmade cement jar with wooden spoons.",
+      description: "Handmade cement jar with wooden spoons.",
     },
     {
-        href: "/products",  
+        href: "/products/3",  
         imageData: {
           src: artThreeImage,
           alt: "Image 3",
@@ -52,7 +52,7 @@ const productsCardData = [
 
   const artisansCardData = [
     {
-      href: "/products",  
+      href: "/artisans/1",  
       imageData: {
         src: artisanOneImage,
         alt: "Image 1",
@@ -61,7 +61,7 @@ const productsCardData = [
       description: "Artisan since 2021",
     },
     {
-      href: "/products",  
+      href: "/artisans/2",  
       imageData: {
         src: artisanTwoImage,
         alt: "Image 2",
@@ -70,7 +70,7 @@ const productsCardData = [
       description: "Artisan since 2001",
     },
     {
-        href: "/products",  
+        href: "/artisans/3",  
         imageData: {
           src: artisanThreeImage,
           alt: "Image 3",
