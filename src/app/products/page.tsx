@@ -11,10 +11,10 @@ const createFakeProduct = () => ( {
   id: faker.string.uuid(),
   name: faker.commerce.product(),
   category: faker.commerce.department(),
-  description: faker.commerce.productDescription(),
-  price: faker.commerce.price(),
+  // description: faker.commerce.productDescription(),
+  price: +faker.commerce.price(),
   rating: faker.number.int({ min: 1, max: 5 }),
-  imageURL: faker.image.urlLoremFlickr({ category: 'abstract' })
+  imageURL: faker.image.urlLoremFlickr({ category: 'abstract', width: 500 })
 
 } );
 
@@ -45,7 +45,7 @@ export default function Page() {
 
       <h1>Products</h1>
 
-      <ProductList productList={products} />
+      <ProductList products={products} />
 
     </main>
 

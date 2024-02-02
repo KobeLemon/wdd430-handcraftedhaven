@@ -1,5 +1,17 @@
 
-export default function Review( { date, fullName, review } : { date: Date, fullName: string, review: string }) {
+export type ReviewType = {
+
+  id: number,
+
+  date: string,
+
+  name: string,
+
+  review: string
+
+}
+
+export default function Review( { date, name, review } : { date: string, name: string, review: string }) {
 
   return (
 
@@ -23,7 +35,7 @@ export default function Review( { date, fullName, review } : { date: Date, fullN
 
           <h3 className='h6 mb-1'>
 
-            {fullName}
+            {name}
 
           </h3>
 

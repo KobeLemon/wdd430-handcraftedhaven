@@ -1,7 +1,7 @@
 import ProductCard, { Product } from "./ProductCard"
 
 
-export default function ProductList({ productList } : Product[]) {
+export default function ProductList({ products } : { products: Product[]}) {
 
   return (
 
@@ -9,9 +9,11 @@ export default function ProductList({ productList } : Product[]) {
   
       {
 
-        productList.map( (product : Product) => (
+        products.map( (product : Product) => (
 
           <ProductCard
+
+            key={product.id}
             
             id={product.id} 
             

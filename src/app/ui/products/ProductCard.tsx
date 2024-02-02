@@ -2,17 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/16/solid";
 
-export interface Product {
+export type Product = {
   id: string,
   name: string,
   category: string,
-  description: string,
+  description?: string,
   price: number,
   rating: number,
   imageURL: string
 }
 
-export default function ProductCard({ id, name, category, price, imageURL, rating, } : Product) {
+export default function ProductCard({ id, name, category, price, imageURL, rating } : Product) {
 
   return (
 
@@ -29,6 +29,8 @@ export default function ProductCard({ id, name, category, price, imageURL, ratin
           alt='' 
           
           fill
+
+          sizes="(max-width: 640px) 192vw, 341vw"
           
         />
 
