@@ -28,7 +28,7 @@ export default function RootLayout({
 
         <SideNav/>
 
-        <div className="overflow-y-auto my-o mx-auto">{children}</div>
+        <div className="overflow-y-auto my-o mx-auto w-full">{children}</div>
 
       </body>
 
