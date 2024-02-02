@@ -1,4 +1,4 @@
-import SidenavLinks from '@/app/ui/sidenav-links';
+import SidenavLinks from '@/app/ui/sidenav/sidenav-links';
 
 export default function SideNav(){
     return (

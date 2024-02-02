@@ -1,9 +1,9 @@
 import '@/app/ui/global.css'
 
 import type { Metadata } from 'next';
-import SideNav from '@/app/ui/sidenav';
+import SideNav from '@/app/ui/sidenav/sidenav';
 import { kumbhSans } from '@/app/ui/fonts';
-import Nav from '@/app/ui/nav';
+import Nav from '@/app/ui/header/nav';
 
 export const metadata: Metadata = {
   title: {
