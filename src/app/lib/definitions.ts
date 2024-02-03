@@ -9,7 +9,7 @@ export type Product = {
   price: string;
   rating: number;
   category: number;
-  collection: string
+  collection: string;
   picture: {
     small: string;
     medium: string;
