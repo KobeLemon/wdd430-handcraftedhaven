@@ -1,20 +1,15 @@
 
-// import { useState } from 'react';
-// import { StaticImageData } from 'next/image';
-// import artOneImage from '../../../../public/images/art-1.jpg';
-// import artTwoImage from '../../../../public/images/art-2.jpg';
-// import artThreeImage from '../../../../public/images/art-3.jpg';
-// import artFourImage from '../../../../public/images/art-4.jpg';
-// import artOneThumbnail from '../../../../public/thumbnails/art-1.jpg';
-// import artTwoThumbnail from '../../../../public/thumbnails/art-2.jpg';
-// import artThreeThumbnail from '../../../../public/thumbnails/art-3.jpg';
-// import artFourThumbnail from '../../../../public/thumbnails/art-4.jpg';
 import Image from 'next/image';
 import { Review } from '@/app/lib/test-definitions';
 import ReviewsList from '@/app/ui/products/ReviewsList';
 import ReviewForm from '@/app/ui/products/ReviewForm';
 import CartQuantityButtons from '@/app/ui/products/CartQuantityButtons';
 import { fetchProductById } from '@/app/lib/test-data';
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Product',
+};
 
 
 const reviews : Review[] = [

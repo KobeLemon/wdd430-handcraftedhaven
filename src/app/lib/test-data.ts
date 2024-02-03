@@ -9,8 +9,6 @@ export async function fetchProducts() {
 
     const data = await res.json();
 
-    // console.log(data);
-
     return data;
 
   } catch (error) {
@@ -28,12 +26,27 @@ export async function fetchProductById( id: number ) {
 
     const data = await res.json();
 
-    // console.log(data);
-
     return data;
 
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products data.');
+  }
+}
+
+export async function fetchCategories() {
+  noStore();
+
+  try {
+
+    const res = await fetch('https://fakestoreapi.com/products/categories');
+
+    const data = await res.json();
+
+    return data;
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch categories data.');
   }
 }
