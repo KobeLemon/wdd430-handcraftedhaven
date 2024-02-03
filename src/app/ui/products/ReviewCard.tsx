@@ -1,17 +1,5 @@
 
-export type ReviewType = {
-
-  id: number,
-
-  date: string,
-
-  name: string,
-
-  review: string
-
-}
-
-export default function Review( { date, name, review } : { date: string, name: string, review: string }) {
+export default function ReviewCard( { date, name, review } : { date: string, name: string, review: string }) {
 
   return (
 

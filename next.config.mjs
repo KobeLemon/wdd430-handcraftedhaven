@@ -9,6 +9,12 @@ const nextConfig = {
         port: '',
         // pathname: '/my-bucket/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+        port: '',
+        // pathname: '/my-bucket/**',
+      },
     ],
   },
 

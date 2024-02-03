@@ -1,6 +1,7 @@
-import Review, { ReviewType } from "./Review";
+import ReviewCard from "./ReviewCard";
+import { Review } from "@/app/lib/test-definitions";
 
-export default function ReviewsList( { list } : { list: ReviewType[] } ) {
+export default function ReviewsList( { list } : { list: Review[] } ) {
 
   return (
 
@@ -12,7 +13,7 @@ export default function ReviewsList( { list } : { list: ReviewType[] } ) {
 
           return (
 
-            <Review
+            <ReviewCard
             
               key={reviewData.id}
               
