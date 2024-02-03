@@ -195,6 +195,9 @@ function main(){
     makePerson();
     makePerson();
 
+    HandcraftedHavenArtisans.sort((a, b) => a.id - b.id);
+    HandcraftedHavenUsers.sort((a, b) => a.id - b.id);
+
     console.log(HandcraftedHavenArtisans[HandcraftedHavenUsers.length-1])
     console.log(HandcraftedHavenUsers[HandcraftedHavenUsers.length-1])
 

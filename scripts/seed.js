@@ -24,18 +24,19 @@ async function seedUsers(client) {
       `;
   
       console.log(`Created "HandcraftedHavenUsers" table`);
+
+      const insertedUsers = [];
   
       // Insert data into the "users" table
-      const insertedUsers = await Promise.all(
-        HandcraftedHavenUsers.map(async (user) => {
-          const hashedPassword = await bcrypt.hash(user.password, 10);
-          return client.sql`
-          INSERT INTO HandcraftedHavenUsers (id, username, email, password)
-          VALUES (${user.id}, ${user.username}, ${user.email}, ${hashedPassword})
+      for(let i = 0; i < HandcraftedHavenUsers.length;i++){
+        const user = HandcraftedHavenUsers[i]
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        insertedUsers.push(client.sql`
+          INSERT INTO HandcraftedHavenUsers (username, email, password)
+          VALUES (${user.username}, ${user.email}, ${hashedPassword})
           ON CONFLICT (email) DO NOTHING;
-        `;
-        }),
-      );
+        `)
+      }
   
       console.log(`Seeded ${insertedUsers.length} users`);
   
@@ -64,18 +65,16 @@ async function seedArtisans(client) {
       `;
   
       console.log(`Created "HandcraftedHavenArtisans" table`);
-  
+      const insertedArtisans=[]
       // Insert data into the "users" table
-      const insertedArtisans = await Promise.all(
-        HandcraftedHavenArtisans.map(async (artisan) => {
-            const artisanTagValue = artisan.artisanTag || null
-          return client.sql`
-          INSERT INTO HandcraftedHavenArtisans (id, name, description, collection, pictures)
-          VALUES (${artisan.id}, ${artisan.name}, ${artisan.description}, ${artisan.collection}, ARRAY[${[artisan.picture.small, artisan.picture.medium, artisan.picture.big]}])
+      for(let i = 0; i < HandcraftedHavenArtisans.length; i++){
+        artisan = HandcraftedHavenArtisans[i]
+        insertedArtisans.push(client.sql`
+          INSERT INTO HandcraftedHavenArtisans (name, description, collection, pictures)
+          VALUES (${artisan.name}, ${artisan.description}, ${artisan.collection}, ARRAY[${[artisan.picture.small, artisan.picture.medium, artisan.picture.big]}])
           ON CONFLICT (id) DO NOTHING;
-        `;
-        }),
-      );
+        `);
+      }
   
       console.log(`Seeded ${insertedArtisans.length} artisans`);
   
