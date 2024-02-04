@@ -1,12 +1,13 @@
 'use client';
-import { UsersIcon, HomeIcon, ViewColumnsIcon }from "@heroicons/react/16/solid";
+import { UsersIcon, HomeIcon, ViewColumnsIcon, BuildingStorefrontIcon }from "@heroicons/react/16/solid";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 const links = [
     {name: "Home", href: "/", icon: HomeIcon},
     {name: "Artisans", href: "/artisans", icon: UsersIcon},
-    {name: "Categories", href: "/products", icon: ViewColumnsIcon},
+    {name: "Categories", href: "/categories", icon: ViewColumnsIcon},
+    {name: "Products", href: "/products", icon: BuildingStorefrontIcon},
 ]
 
 export default function SidenavLinks(){

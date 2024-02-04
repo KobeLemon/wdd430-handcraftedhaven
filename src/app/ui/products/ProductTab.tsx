@@ -7,13 +7,13 @@ export default function ProductTab( { images, thumbnails } : { images: StaticIma
 
   const carouselItemsContainerRef = useRef( null );
 
-  let carouselItems : HTMLDivElement[] = [];
+  let carouselItems : HTMLDivElement[] | null = [];
 
   const carouselTabClickHandler = ( event: Event ) => {
 
-    if ( ! carouselItems.length ) carouselItems = Array.from( carouselItemsContainerRef.current.children );
+    if ( ! carouselItems?.length ) carouselItems = Array.from( carouselItemsContainerRef?.current.children );
 
-    const target = event.target.closest( 'button' ) as HTMLButtonElement;
+    const target = event.target?.closest( 'button' ) as HTMLButtonElement;
 
     carouselItems.forEach( (carouselItem : HTMLDivElement) => {
 
