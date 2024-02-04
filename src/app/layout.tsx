@@ -1,9 +1,9 @@
 import '@/app/ui/global.css'
 
 import type { Metadata } from 'next';
-import SideNav from '@/app/ui/sidenav';
+import SideNav from '@/app/ui/sidenav/sidenav';
 import { kumbhSans } from '@/app/ui/fonts';
-import Nav from '@/app/ui/nav';
+import Nav from '@/app/ui/header/nav';
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +28,7 @@ export default function RootLayout({
 
         <SideNav/>
 
-        <div className="p-6 md:overflow-y-auto md:p-12">{children}</div>
+        <div className="overflow-y-auto my-o mx-auto">{children}</div>
 
       </body>
 
