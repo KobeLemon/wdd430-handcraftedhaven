@@ -1,5 +1,5 @@
 
-export default function Review( { date, fullName, review } : { date: Date, fullName: string, review: string }) {
+export default function ReviewCard( { date, name, review } : { date: string, name: string, review: string }) {
 
   return (
 
@@ -23,7 +23,7 @@ export default function Review( { date, fullName, review } : { date: Date, fullN
 
           <h3 className='h6 mb-1'>
 
-            {fullName}
+            {name}
 
           </h3>
 
