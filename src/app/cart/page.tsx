@@ -17,7 +17,7 @@ interface Product {
 }
 
 
-export function CartPage(){
+function CartPage(){
       
     const [cart, setCart] = useState(() => {
         const cartFromStorage = window.localStorage.getItem("cart")
@@ -89,7 +89,7 @@ interface CartItemComponentProps {
     removeFromCart: CartItemProps['removeFromCart'];
 }
   
-export function CartItem({ product, updateQuantity, removeFromCart }: CartItemComponentProps) {
+function CartItem({ product, updateQuantity, removeFromCart }: CartItemComponentProps) {
     return (
         <tr className='flex w-full items-center justify-between py-4 border-b-2 border-light-grayish-blue '>
             <td className='px-2 md:px-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium'>
