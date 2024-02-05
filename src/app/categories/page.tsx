@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { fetchCategories } from '../lib/test-data';
+import { getCategories } from '../lib/data';
 import CategoryList from '../ui/categories/CategoryList';
  
 export const metadata: Metadata = {
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
 
-  const categories = await fetchCategories();
+  const categories = await getCategories();
 
   return (
 
-    <main>
+    <main className='p-8 sm:p-10'>
 
       <h1>Categories</h1>
 

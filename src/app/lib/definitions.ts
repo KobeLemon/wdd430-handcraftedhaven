@@ -8,9 +8,9 @@ export type Product = {
   description: string;
   price: string;
   rating: number;
-  category: number;
+  category: string;
   collection: string;
-  picture: {
+  pictures: {
     small: string;
     medium: string;
     big: string;
@@ -32,11 +32,11 @@ export type Collection = {
 export type Category = {
   id: number;
   name: string;
-  picture: {
-    small: string;
-    medium:string;
-    big:   string;
-  };
+  // picture: {
+  //   small: string;
+  //   medium:string;
+  //   big:   string;
+  // };
 }
 
 export type Artisan = {
@@ -53,7 +53,7 @@ export type Artisan = {
 
 export type Review = {
   id: string;
-  productId: string;
+  productid: string;
   name: string;
   description: string;
   rating: number;

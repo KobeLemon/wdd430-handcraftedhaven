@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import CategoryList from '@/app/ui/categories/CategoryList';
-import { fetchProducts } from '@/app/lib/test-data';
+import { getProductsByCategory } from '@/app/lib/data';
 import ProductList from '@/app/ui/products/ProductList';
  
 export const metadata: Metadata = {
@@ -9,23 +8,29 @@ export const metadata: Metadata = {
 
 export default async function Page( {
 
-  params
+  params,
+
+  searchParams
 
 } : {
 
-  params: { id: number }
+  params: { id: number },
+
+  searchParams: { name: string }
 
 } ) {
 
-  const categoryId = params.id;
+  const categoryId : number = params.id;
 
-  const products = await fetchProducts();
+  const categoryName : string = searchParams.name;
+
+  const products = await getProductsByCategory( categoryId );
 
   return (
 
-    <main>
+    <main className='p-8 sm:p-10'>
 
-      <h1>{ categoryId }</h1>
+      <h1 className='capitalize'>{ decodeURIComponent( categoryName ) }</h1>
 
       <ProductList products={products} />
 

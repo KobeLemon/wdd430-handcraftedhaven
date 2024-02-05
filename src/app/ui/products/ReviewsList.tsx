@@ -1,7 +1,7 @@
 import ReviewCard from "./ReviewCard";
-import { Review } from "@/app/lib/test-definitions";
+import { Review } from "@/app/lib/definitions";
 
-export default function ReviewsList( { list } : { list: Review[] } ) {
+export default function ReviewsList( { reviews } : { reviews: Review[] } ) {
 
   return (
 
@@ -9,19 +9,19 @@ export default function ReviewsList( { list } : { list: Review[] } ) {
 
       {
 
-        list.map( ( reviewData ) => {
+        reviews.map( ( review ) => {
 
           return (
 
             <ReviewCard
             
-              key={reviewData.id}
+              key={review.id}
               
-              date={reviewData.date} 
+              name={review.name} 
               
-              name={reviewData.name} 
-              
-              review={reviewData.review} 
+              description={review.description}
+
+              rating={review.rating}
               
             />
 
