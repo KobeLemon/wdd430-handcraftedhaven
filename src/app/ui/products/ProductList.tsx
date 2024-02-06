@@ -1,5 +1,5 @@
-import ProductCard from "./ProductCard"
-import { Product } from "@/app/lib/test-definitions"
+import ProductCard from "./ProductCard";
+import { Product } from "@/app/lib/definitions";
 
 
 export default function ProductList({ products } : { products: Product[]}) {
@@ -18,15 +18,19 @@ export default function ProductList({ products } : { products: Product[]}) {
             
             id={product.id} 
             
-            title={product.title}
+            name={product.name}
+
+            description={product.description}
+
+            collection={product.collection}
             
             category={product.category} 
             
             price={product.price} 
 
-            rating={Math.ceil(product.rating?.rate)}
+            rating={product.rating}
             
-            image={product.image} 
+            pictures={product.pictures}
             
           />
 

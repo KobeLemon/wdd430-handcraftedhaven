@@ -3,21 +3,24 @@
 import { useFormState } from 'react-dom';
 import Button from './Button';
 import { StarIcon } from '@heroicons/react/16/solid';
-import { createReview } from '@/app/lib/test-actions';
+import { State, createReview } from '@/app/lib/test-actions';
+import { useParams } from 'next/navigation';
 
 export default function ReviewForm() {
 
+  const params = useParams<{ id: string;}>();
+
+  const productId = params.id;
+
   const initialState = {
 
-    errors: {},
+    message: null,
 
-    message: null
+    errors: {}
 
   }
 
   const [ state, dispatch ] = useFormState( createReview, initialState );
-
-  // console.log( state );
 
   return (
 
@@ -26,6 +29,15 @@ export default function ReviewForm() {
       <h2 className='h3'>Leave A Review</h2>
 
       <form className='max-w-96' action={dispatch}>
+
+        {/* Product id */}
+        <div className='hidden'>
+
+          <label htmlFor="productid"></label>
+
+          <input className='focus:border-orange focus:ring-orange rounded-md' name='productid' id='productid' type="text" defaultValue={productId} />
+
+        </div>
 
         {/* Reviewer Name */}
         <div className='flex flex-col gap-y-1 mb-4'>

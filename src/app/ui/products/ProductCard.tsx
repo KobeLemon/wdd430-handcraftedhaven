@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { StarIcon } from "@heroicons/react/16/solid";
-import { Product } from "@/app/lib/test-definitions";
+import StarsRating from "./StarsRating";
+import { Product } from "@/app/lib/definitions";
 
 
-
-export default function ProductCard({ id, title, category, price, description, image, rating } : Product) {
+export default function ProductCard({ id, name, category, price, description, collection, pictures, rating } : Product) {
 
   return (
 
@@ -15,9 +14,9 @@ export default function ProductCard({ id, title, category, price, description, i
 
         <Image 
 
-          className='object-contain'
+          className='object-cover'
         
-          src={image} 
+          src={pictures.small} 
           
           alt='' 
           
@@ -31,28 +30,12 @@ export default function ProductCard({ id, title, category, price, description, i
 
       <div className='py-4'>
 
-        <div className='w-min flex'>
-          {
+        <StarsRating rating={rating} />
+        
+        <div className='text-lg'>{name}</div>
 
-            Array(5).fill(1).map( ( item, index ) => {
-
-              return (
-              
-                <StarIcon 
-                
-                  key={index} 
-              
-                  className={`h-4 w-4 ${index < rating ? 'text-[#ffdf00]' : ''}`} 
-            
-                />
-
-              )
-
-            } )
-          }
-        </div>
-        <div className='text-lg'>{title}</div>
         <div className='text-dark-grayish-blue mb-2'>{category}</div>
+
         <div className='font-bold'>$ {price}</div>
 
       </div>

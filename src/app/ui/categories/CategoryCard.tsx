@@ -4,27 +4,23 @@ export default function CategoryCard( {
 
   id,
   
-  categoryTitle,
-
-  // params
+  name
 
 } : {
 
   id: number,
   
-  categoryTitle: string
-
-  // params: { category: string }
+  name: string
 
 } ) {
 
   return (
 
-    <Link className='flex justify-center items-center px-10 flex-1 basis-60 h-80 rounded-lg bg-orange' href={`/categories/${id}`}>
+    <Link className='flex justify-center items-center px-10 flex-1 basis-60 h-80 rounded-lg bg-orange' href={`/categories/${id}?name=${encodeURIComponent(name.toLocaleLowerCase())}`}>
 
-      <div className='text-4xl font-bold text-center text-white'>
+      <div className='text-4xl font-bold text-center text-black'>
                 
-        {categoryTitle}
+        {name}
         
       </div>
 

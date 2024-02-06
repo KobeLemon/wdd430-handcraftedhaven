@@ -1,41 +1,35 @@
 
-export default function ReviewCard( { date, name, review } : { date: string, name: string, review: string }) {
+import StarsRating from "./StarsRating"
+
+export default function ReviewCard( { name, description, rating } : { name: string, description: string, rating: number }) {
 
   return (
 
-    <div className='flex gap-x-3 mb-5'>
-      
-      <div>
-      
-        <div className='w-16 h-16 rounded-full bg-orange'></div>
-
-      </div>
+    <div className='mb-5'>
 
       <div>
 
-        <div>
+        {/* <span className='text-[10px] text-dark-grayish-blue'>
 
-          <span className='text-[10px] text-dark-grayish-blue'>
+          '01-25-2024'
 
-            {date}
+        </span> */}
 
-          </span>
+        <h3 className='h6 mb-1'>
 
-          <h3 className='h6 mb-1'>
+          {name}
 
-            {name}
-
-          </h3>
-
-        </div>
-
-        <p>
-
-          {review}
-
-        </p>
+        </h3>
 
       </div>
+
+      <p className='mb-1'>
+
+        {description}
+
+      </p>
+
+      <StarsRating rating={rating} />
 
     </div>
 

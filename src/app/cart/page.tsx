@@ -1,41 +1,48 @@
 'use client'
 
 import Image, { StaticImageData } from 'next/image';
-import thumbnail from '../../../public/thumbnails/art-1.jpg';
+// import thumbnail from '../../../public/thumbnails/art-1.jpg';
 import React, { useState, useEffect } from 'react';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+  
 
 
 interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
     quantity: number;
-    image: StaticImageData
+    image: string
 }
 
 
-export function CartPage(){
+function CartPage(){
       
-    const [cart, setCart] = useState(() => {
-        const cartFromStorage = window.localStorage.getItem("cart")
-        if (cartFromStorage) return JSON.parse(cartFromStorage) as Product[]
-        return [] as Product[]
-    });
+    const [cart, setCart] = useState([] as Product[]);
+
+    useEffect(() => {
+
+        setCart(() => {
+            const cartFromStorage = localStorage.getItem("cart")
+            if (cartFromStorage) return JSON.parse(cartFromStorage) as Product[]
+            return [] as Product[]
+        } );
+
+    },[])
   
     useEffect(() => {
         setCart((prevCart) => {
-          localStorage.setItem('cart', JSON.stringify(prevCart));
-          return prevCart;
+            localStorage.setItem('cart', JSON.stringify(prevCart));
+            return prevCart;
         });
-      }, [cart]);
+    }, [cart]);
   
-    const removeFromCart = (productId: number) => {
+    const removeFromCart = (productId: string) => {
       setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
     };
   
-    const updateQuantity = (productId: number, action: 'add' | 'subtract') => {
+    const updateQuantity = (productId: string, action: 'add' | 'subtract') => {
       setCart((prevCart) => {
       const updatedCart = prevCart.map((item) =>
           item.id === productId
@@ -44,7 +51,7 @@ export function CartPage(){
         );
         const filteredCart = updatedCart.filter((item) => item.quantity > 0);
 
-    return filteredCart;
+        return filteredCart;
         
     });
 
@@ -78,8 +85,8 @@ export function CartPage(){
   };
 
   interface CartItemProps {
-    updateQuantity: (productId: number, action: 'add' | 'subtract') => void;
-    removeFromCart: (productId: number) => void;
+    updateQuantity: (productId: string, action: 'add' | 'subtract') => void;
+    removeFromCart: (productId: string) => void;
   }
   
 interface CartItemComponentProps {
@@ -88,12 +95,12 @@ interface CartItemComponentProps {
     removeFromCart: CartItemProps['removeFromCart'];
 }
   
-export function CartItem({ product, updateQuantity, removeFromCart }: CartItemComponentProps) {
+function CartItem({ product, updateQuantity, removeFromCart }: CartItemComponentProps) {
     return (
         <tr className='flex w-full items-center justify-between py-4 border-b-2 border-light-grayish-blue '>
             <td className='px-2 md:px-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium'>
                 <Link href={`/products/${product.id}`} className='flex items-center justify-around '>
-                    <Image src={product.image} alt={`product image of ${product.name}`} className='w-16 h-16 min-w-14 rounded-lg object-cover overflow-hidden me-2 md:me-3 md:w-24 md:h-24'/>
+                    <Image src={product.image} width={80} height={80} alt={`product image of ${product.name}`} className='w-16 h-16 min-w-14 rounded-lg object-cover overflow-hidden me-2 md:me-3 md:w-24 md:h-24'/>
                     <h6 className='m-0 text-xs md:text-base lg:text-lg'>{product.name}</h6>
                 </Link>
             </td>

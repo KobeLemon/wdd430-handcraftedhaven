@@ -5,23 +5,26 @@ import Image, { StaticImageData } from "next/image";
 
 export default function ProductTab( { images, thumbnails } : { images: StaticImageData[], thumbnails: StaticImageData[] }) {
 
-  const carouselItemsContainerRef = useRef( null );
+  const carouselItemsContainerRef = useRef<HTMLDivElement>(null);
 
   let carouselItems : HTMLDivElement[] | null = [];
 
-  const carouselTabClickHandler = ( event: Event ) => {
+  const carouselTabClickHandler = ( event: React.MouseEvent<HTMLButtonElement>) => {
 
-    if ( ! carouselItems?.length ) carouselItems = Array.from( carouselItemsContainerRef?.current.children );
-
-    const target = event.target?.closest( 'button' ) as HTMLButtonElement;
+    if ( ! carouselItems?.length ) {
+      const elements = carouselItemsContainerRef?.current?.querySelectorAll('div') || [];
+      carouselItems = Array.from(elements) as HTMLDivElement[];
+    }
+    const target = event.target as HTMLButtonElement;
 
     carouselItems.forEach( (carouselItem : HTMLDivElement) => {
 
-      carouselItem.setAttribute( 'aria-hidden', target.getAttribute( 'aria-controls' ) !== carouselItem.getAttribute( 'id' ) );
+      carouselItem.setAttribute( 'aria-hidden', (target.getAttribute('aria-controls') !== carouselItem.getAttribute('id')).toString());
+    });
 
-    } );
-
+    
   }
+  
 
   return (
 

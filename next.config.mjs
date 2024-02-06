@@ -11,7 +11,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'fakestoreapi.com',
+        hostname: 'picsum.photos',
         port: '',
         // pathname: '/my-bucket/**',
       },

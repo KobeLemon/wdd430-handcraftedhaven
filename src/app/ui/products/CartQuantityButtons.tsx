@@ -1,19 +1,28 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactEventHandler } from 'react';
 import { MinusIcon, PlusIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import Button from './Button';
 import { useParams } from 'next/navigation';
+import { json } from 'stream/consumers';
 
 type CartProduct = {
 
-  id: number,
+  id: string;
 
-  title: string,
+  name: string;
 
-  image: string,
+  price: number;
+  
+  quantity: number;
+  
+  image: string;
 
-  price: number
+}
+
+function storeProduct( products: CartProduct[] ) {
+
+  localStorage.setItem( 'cart', JSON.stringify( products ) );
 
 }
 
@@ -33,19 +42,25 @@ export default function CartQuantityButtons() {
 
     const fetchProductData = async () => {
 
-      const res = await fetch( `https://fakestoreapi.com/products/${id}` );
+      const res = await fetch( `/api/products?id=${id}` );
       
       const data = await res.json();
+
+      console.log( data, 'fetching data' );
+
+      if ( product ) return;
   
       setProduct( {
 
         id: data.id,
 
-        title: data.title,
+        name: data.name,
 
-        image: data.image,
+        price: data.price,
+        
+        image: data.pictures.small,
 
-        price: data.price
+        quantity: 0
 
       } );
 
@@ -57,9 +72,41 @@ export default function CartQuantityButtons() {
 
   const addToCartClickHandler = () => {
 
+    console.log( quantity );
+
     if ( quantity == 0 ) return;
 
-    // console.log( 'add to cart', id );
+    let cartItems : CartProduct[] | string | null = localStorage.getItem( 'cart' );
+
+    if ( ! cartItems ) {
+
+      let updatedCart = [ { ...product, quantity } ] as CartProduct[];
+
+      storeProduct( updatedCart );
+
+    } else {
+
+      cartItems = JSON.parse( cartItems ) as CartProduct[];
+
+      const isProductInCart = cartItems.find( ( cartItem: CartProduct ) => cartItem.id === product?.id );      
+
+      if ( isProductInCart ) {
+
+        let updatedCart = cartItems.map( cartItem => cartItem.id === product?.id ? { ...cartItem, quantity } : cartItem );
+
+        storeProduct( updatedCart );
+
+        console.log( isProductInCart, 'IS IN PRODUCT CART' );
+
+      } else {
+
+        let updatedCart = [ ...cartItems, { ...product, quantity } ] as  CartProduct[];
+
+        storeProduct( updatedCart );
+
+      }
+
+    }
 
   }
 

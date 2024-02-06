@@ -1,6 +1,7 @@
-import CategoryCard from "./CategoryCard"
+import CategoryCard from "./CategoryCard";
+import { Category } from "@/app/lib/definitions";
 
-export default function CategoryList({ categories } : { categories: string[]}) {
+export default function CategoryList({ categories } : { categories: Category[]}) {
 
   return (
 
@@ -8,15 +9,15 @@ export default function CategoryList({ categories } : { categories: string[]}) {
 
       {
        
-        categories.map( ( category, index ) => (
+        categories.map( ( category ) => (
 
           <CategoryCard 
           
-            key={index}
+            key={category.id}
 
-            id={index+1}
+            id={category.id}
             
-            categoryTitle={category}
+            name={category.name}
           
           />
 
