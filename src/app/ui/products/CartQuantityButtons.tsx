@@ -5,6 +5,9 @@ import { MinusIcon, PlusIcon, ShoppingCartIcon } from '@heroicons/react/24/outli
 import Button from './Button';
 import { useParams } from 'next/navigation';
 import { json } from 'stream/consumers';
+import { useShoppingCart } from '../header/shopping-cart';
+import { toast } from 'sonner';
+ 
 
 type CartProduct = {
 
@@ -23,6 +26,15 @@ type CartProduct = {
 function storeProduct( products: CartProduct[] ) {
 
   localStorage.setItem( 'cart', JSON.stringify( products ) );
+
+}
+
+function getTotalCartQuantity(){
+  const cartItems: CartProduct[] | null = JSON.parse(localStorage.getItem('cart') || 'null');
+
+  const totalQuantity = cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+
+  return totalQuantity
 
 }
 
@@ -69,46 +81,41 @@ export default function CartQuantityButtons() {
     fetchProductData();
 
   }, [] );
+  const { setCartQuantity } = useShoppingCart();
 
   const addToCartClickHandler = () => {
-
-    console.log( quantity );
-
-    if ( quantity == 0 ) return;
-
-    let cartItems : CartProduct[] | string | null = localStorage.getItem( 'cart' );
-
-    if ( ! cartItems ) {
-
-      let updatedCart = [ { ...product, quantity } ] as CartProduct[];
-
-      storeProduct( updatedCart );
-
+    if (quantity === 0) return;
+  
+    let cartItems: CartProduct[] | string | null = localStorage.getItem('cart');
+  
+    if (!cartItems) {
+      let updatedCart = [{ ...product, quantity }] as CartProduct[];
+      storeProduct(updatedCart);
+      
+      setCartQuantity(getTotalCartQuantity())
     } else {
-
-      cartItems = JSON.parse( cartItems ) as CartProduct[];
-
-      const isProductInCart = cartItems.find( ( cartItem: CartProduct ) => cartItem.id === product?.id );      
-
-      if ( isProductInCart ) {
-
-        let updatedCart = cartItems.map( cartItem => cartItem.id === product?.id ? { ...cartItem, quantity } : cartItem );
-
-        storeProduct( updatedCart );
-
-        console.log( isProductInCart, 'IS IN PRODUCT CART' );
+      cartItems = JSON.parse(cartItems) as CartProduct[];
+  
+      const isProductInCart = cartItems.find((cartItem: CartProduct) => cartItem.id === product?.id);
+  
+      if (isProductInCart) {
+        let updatedCart = cartItems.map((cartItem) =>
+          cartItem.id === product?.id ? { ...cartItem, quantity } : cartItem
+        );
+        storeProduct(updatedCart);
+      setCartQuantity(getTotalCartQuantity())
 
       } else {
-
-        let updatedCart = [ ...cartItems, { ...product, quantity } ] as  CartProduct[];
-
-        storeProduct( updatedCart );
+        let updatedCart = [...cartItems, { ...product, quantity }] as CartProduct[];
+        storeProduct(updatedCart);
+      setCartQuantity(getTotalCartQuantity())
 
       }
-
     }
-
-  }
+    toast.success('Item added to the cart', {
+      position: 'top-center'
+    })
+  };
 
   return (
 

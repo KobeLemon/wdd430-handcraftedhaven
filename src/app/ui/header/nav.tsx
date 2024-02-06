@@ -1,20 +1,42 @@
-import ShoppingCart from "@/app/ui/header/shopping-cart";
+'use client';
+import { useEffect, useState } from "react";
+import  {ShoppingCart , ShoppingCartProvider } from "@/app/ui/header/shopping-cart";
 import Search from "@/app/ui/header/search";
 import Profile from "@/app/ui/header/profile";
 import Logo from "@/app/ui/header/logo";
 
-export default function Nav(){
+export default function Nav() {
+    const [cartData, setCartData] = useState<string | null>(window.localStorage.getItem("cart"));
+    const [productCount, setProductCount] = useState<number>(0);
+
+    // useEffect to update productCount whenever cartData changes
+    useEffect(() => {
+        if (cartData) {
+            const cartItems = JSON.parse(cartData);
+            let totalItemsInCart = 0;
+
+            cartItems.forEach((item: { quantity: number }) => {
+                totalItemsInCart += item.quantity;
+            });
+
+            setProductCount(totalItemsInCart);
+        } else {
+            setProductCount(0);
+        }
+    }, [cartData]);
+
     return (
-        <header className="bg-light-grayish-blue col-span-full">
-            <nav className="flex justify-between h-full items-center">
-                <Logo/>
-                <Search placeholder="Search Products"/>
-                <div className="flex me-5 gap-5 justify-around md:me-10 md:gap-10">
-                    <Profile/>
-                    <ShoppingCart/>
-                </div>
-                
-            </nav>
-        </header>
-    )
+            <header className="bg-light-grayish-blue col-span-full">
+                <nav className="flex justify-between h-full items-center">
+                    <Logo />
+                    <Search placeholder="Search Products" />
+                    <div className="flex me-5 gap-5 justify-around md:me-10 md:gap-10">
+                        <Profile />
+
+                        <ShoppingCart />
+
+                    </div>
+                </nav>
+            </header>
+    );
 }
