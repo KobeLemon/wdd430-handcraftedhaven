@@ -1,6 +1,6 @@
 import { StarIcon } from "@heroicons/react/16/solid";
 
-export default function StarsRating( { rating } : { rating: number } ) {
+export default function StarsRating( { rating } : { rating: number | undefined } ) {
 
   return (
 
@@ -16,7 +16,7 @@ export default function StarsRating( { rating } : { rating: number } ) {
             
               key={index} 
           
-              className={`h-4 w-4 ${index < rating ? 'text-[#ffdf00]' : ''}`} 
+              className={`h-4 w-4 ${rating ? index < rating ? 'text-[#ffdf00]' : '' : ''}`} 
         
             />
 

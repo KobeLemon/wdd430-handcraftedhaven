@@ -155,3 +155,59 @@ export async function getCategories(){
       throw new Error('Failed to fetch product.');
   }
 }
+
+export async function getXAmountTopProducts(limit: number) {
+  noStore();
+  try {
+    const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category 
+                                FROM HandcraftedHavenProducts 
+                                LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+                                WHERE HandcraftedHavenProducts.rating = 5
+                                LIMIT ${limit}`;
+
+    const results = products.rows;
+    const processed = results.map(item => {
+      const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));
+      item.pictures = { small: picArray[0], medium: picArray[1], big: picArray[2] };
+
+      return item as Product;
+    });
+
+    return processed as Array<Product>;
+  } catch (error) {
+    console.error('Failed to fetch product:', error);
+    throw new Error('Failed to fetch product.');
+  }
+}
+
+export async function getArtisans(limit: number | null = null) {
+  noStore();
+  try {
+    let query;
+
+
+
+    if (limit) {
+
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
+    } else {
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans`
+    }
+
+    // const artisans = await query;
+    const results = query.rows;
+    
+
+    const processed = results.map(item => {
+      const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));
+      item.pictures = { small: picArray[0], medium: picArray[1], big: picArray[2] };
+
+      return item as Artisan;
+    });
+    console.log(processed)
+    return processed as Array<Artisan>;
+  } catch (error) {
+    console.error('Failed to fetch artisans:', error);
+    throw new Error('Failed to fetch artisans.');
+  }
+}

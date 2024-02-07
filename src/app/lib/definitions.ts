@@ -40,11 +40,11 @@ export type Category = {
 }
 
 export type Artisan = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   collection: string;
-  picture: {
+  pictures: {
     small: string;
     medium:string;
     big:   string;
