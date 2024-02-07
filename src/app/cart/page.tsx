@@ -30,11 +30,17 @@ function getTotalCartQuantity(cart: Product[]){
 function CartPage(){
     const { setCartQuantity } = useShoppingCart();
       
-    const [cart, setCart] = useState(() => {
-        const cartFromStorage = window.localStorage.getItem("cart")
-        if (cartFromStorage) return JSON.parse(cartFromStorage) as Product[]
-        return [] as Product[]
-    });
+    const [cart, setCart] = useState([] as Product[]);
+
+    useEffect(() => {
+
+        setCart(() => {
+            const cartFromStorage = localStorage.getItem("cart")
+            if (cartFromStorage) return JSON.parse(cartFromStorage) as Product[]
+            return [] as Product[]
+        } );
+
+    },[])
   
     useEffect(() => {
         setCart((prevCart) => {

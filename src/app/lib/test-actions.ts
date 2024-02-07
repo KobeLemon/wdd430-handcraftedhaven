@@ -1,10 +1,15 @@
 'use server'
 
-import { z } from 'zod'; 
+import { z } from 'zod';
+import { sql } from '@vercel/postgres';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const ReviewFormSchema = z.object( {
 
   name: z.string().trim().min( 1, { message: 'Name is required'} ),
+
+  productid: z.string().trim(),
 
   review: z.string().trim().min( 1, { message: 'Review is required'} ),
 
@@ -24,6 +29,8 @@ export type State = {
 
     name?: string[];
 
+    productid?: string[];
+
     review?: string[];
 
     rating?: string[];
@@ -34,15 +41,13 @@ export type State = {
 
 }
 
-export async function createReview( prevState: State, formData: FormData ) {
-
-  console.log(prevState, "Check Previous state")
-
-  // console.log( formData.get('name'), formData.get('review'), formData.get('rating'), 'boom' )
+export async function createReview( prevState: State | Promise<State>, formData: FormData ) {
 
   const validatedFields = ReviewFormSchema.safeParse( {
 
     name: formData.get( 'name' ),
+
+    productid: formData.get( 'productid' ),
 
     review: formData.get( 'review' ),
 
@@ -50,8 +55,7 @@ export async function createReview( prevState: State, formData: FormData ) {
 
   } );
 
-  console.log( validatedFields, 'VALIDATED FIELDS' );
-
+  
   if ( ! validatedFields.success ) {
 
     return {
@@ -64,15 +68,13 @@ export async function createReview( prevState: State, formData: FormData ) {
 
   }
 
-  const { name, review, rating } = validatedFields.data;
-
-  const date = new Date().toISOString().split('T')[0];
-
-  console.log( validatedFields.data, 'CHECKING FIELDS' );
+  const { name, review, rating, productid } = validatedFields.data;
 
   try {
-    
-    
+
+    await sql`
+      INSERT INTO HandcraftedHavenReviews (productid, name, description, rating) VALUES (${productid}, ${name}, ${review}, ${rating})
+    `;
 
   } catch ( error ) {
     
@@ -82,5 +84,13 @@ export async function createReview( prevState: State, formData: FormData ) {
     }
 
   }
+
+  // revalidatePath(`/products/${productid}`);
+  redirect(`/products/${productid}`);
+
+  return {
+    message: '',
+    errors: {}
+  } as State
 
 }
