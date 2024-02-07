@@ -183,14 +183,19 @@ export async function getXAmountTopProducts(limit: number) {
 export async function getArtisans(limit: number | null = null) {
   noStore();
   try {
-    let query = `SELECT * FROM HandcraftedHavenArtisans`;
+    let query;
 
-    if (limit !== null) {
-      query += ` LIMIT ${limit}`;
+
+
+    if (limit) {
+
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
+    } else {
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans`
     }
 
-    const artisans = await sql`${query}`;
-    const results = artisans.rows;
+    // const artisans = await query;
+    const results = query.rows;
     
 
     const processed = results.map(item => {

@@ -87,14 +87,14 @@ const heroData: HeroData = {
 export default async function Page() {
   
     const productsCardData = await getXAmountTopProducts(3)
-    // const artisansCardData = await getArtisans(3)
+    const artisansCardData = await getArtisans(3)
    
     return (
         <>
             <HeroSection image={heroImage} header={heroData.header} subHeader={heroData.subHeader}/>
             <div className="flex flex-col gap-20 my-20">
                 <TopSection sectionType="products" cardData={productsCardData}/>
-                {/* <TopSection sectionType="artisans" cardData={artisansCardData}/> */}
+                <TopSection sectionType="artisans" cardData={artisansCardData}/>
             </div>
             <SocialSection/>
             <Footer/>
