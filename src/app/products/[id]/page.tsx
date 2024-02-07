@@ -5,7 +5,7 @@ import ReviewForm from '@/app/ui/products/ReviewForm';
 import CartQuantityButtons from '@/app/ui/products/CartQuantityButtons';
 import { getProductById, getReviewsByProductId } from '@/app/lib/data';
 import { Metadata } from 'next';
- 
+import { Toaster } from 'sonner';
 export const metadata: Metadata = {
   title: 'Product',
 };
@@ -78,6 +78,7 @@ export default async function Page({
       </div>
 
       <ReviewForm />
+      <Toaster />
 
     </main>
 

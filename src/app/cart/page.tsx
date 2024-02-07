@@ -5,6 +5,7 @@ import Image, { StaticImageData } from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useShoppingCart } from '../ui/header/shopping-cart';
   
 
 
@@ -16,8 +17,18 @@ interface Product {
     image: string
 }
 
+function getTotalCartQuantity(cart: Product[]){
+    const cartItems = cart
+  
+    const totalQuantity = cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+  
+    return totalQuantity
+  
+  }
+
 
 function CartPage(){
+    const { setCartQuantity } = useShoppingCart();
       
     const [cart, setCart] = useState([] as Product[]);
 
@@ -42,20 +53,25 @@ function CartPage(){
       setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
     };
   
+    
+
     const updateQuantity = (productId: string, action: 'add' | 'subtract') => {
-      setCart((prevCart) => {
-      const updatedCart = prevCart.map((item) =>
-          item.id === productId
-            ? { ...item, quantity: action === 'add' ? item.quantity + 1 : item.quantity > 0 ? item.quantity - 1 : 0 }
-            : item,
-        );
-        const filteredCart = updatedCart.filter((item) => item.quantity > 0);
+        setCart((prevCart) => {
+          const updatedCart = prevCart.map((item) =>
+            item.id === productId
+              ? { ...item, quantity: action === 'add' ? item.quantity + 1 : item.quantity > 0 ? item.quantity - 1 : 0 }
+              : item,
+          );
+          const filteredCart = updatedCart.filter((item) => item.quantity > 0);
+          return filteredCart;
+        });
+      };
+      
+      useEffect(() => {
+        setCartQuantity(getTotalCartQuantity(cart));
+      }, [cart]); 
 
-        return filteredCart;
-        
-    });
 
-    };
 
      
     return (
