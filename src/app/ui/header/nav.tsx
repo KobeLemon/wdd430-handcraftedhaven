@@ -7,9 +7,16 @@ import Logo from "@/app/ui/header/logo";
 import { Suspense } from "react";
 
 export default function Nav() {
-    const [cartData, setCartData] = useState<string | null>(window.localStorage.getItem("cart"));
+    const [cartData, setCartData] = useState<string | null>();
     const [productCount, setProductCount] = useState<number>(0);
 
+    useEffect(() => {
+        // Check if window is defined (i.e., we are in the browser environment)
+        if (typeof window !== 'undefined') {
+            const storedCartData = window.localStorage.getItem("cart");
+            setCartData(storedCartData);
+        }
+    }, []);
     // useEffect to update productCount whenever cartData changes
     useEffect(() => {
         if (cartData) {
