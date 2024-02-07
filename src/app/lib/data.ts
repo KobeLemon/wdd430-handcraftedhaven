@@ -191,7 +191,7 @@ export async function getArtisans(limit: number | null = null) {
 
       query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
     } else {
-      query = await sql`SELECT * FROM HandcraftedHavenArtisans`
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) - 1 FROM HandcraftedHavenArtisans)`
     }
 
     // const artisans = await query;
