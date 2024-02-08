@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { Artisan } from "@/app/lib/definitions";
 import ProductList from '../../ui/products/ProductList';
-import { getProducts } from '../../lib/data';
+import { getProducts, getProductsByArtisan } from '../../lib/data';
 
 
 export default async function ArtisanProfile({id, name, description, pictures} : Artisan) {
 
-	const products = await getProducts();
+	const products = await getProductsByArtisan(id);
 
 	return (
 		<>

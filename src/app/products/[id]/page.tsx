@@ -37,13 +37,13 @@ export default async function Page({
           <Image
 
             className='object-cover'
-          
+
             src={product.pictures.big}
 
             alt=""
 
             fill
-          
+
           />
 
         </div>
@@ -51,7 +51,8 @@ export default async function Page({
         <div className='basis-1/2 shrink-0 md:px-5 md:py-2'>
 
           <h1 className='h3 mb-1'>{ product.name }</h1>
-          <p className='mb-5'>By { '[author]' }</p>
+          <p className='mb-2'>By { product.artisan_name }</p>
+					<p className='text-dark-grayish-blue mb-5'>{ product.category_name }</p>
 
           <p className='mb-8'>
             { product.description }
