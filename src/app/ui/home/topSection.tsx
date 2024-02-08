@@ -32,7 +32,7 @@ interface CommonType {
         <header className="ms-5">
           <h2> Top {sectionType}</h2>
         </header>
-        <main className="flex flex-col justify-center gap-6 lg:flex-row lg:justify-around lg:ms-2">
+        <main className="flex flex-col justify-center items-center gap-6 lg:flex-row lg:justify-around lg:ms-2">
           {cardData.map((data, index) => (
             <Card
               key={index}

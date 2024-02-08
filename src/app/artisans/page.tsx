@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getArtisans } from '../lib/data';
 import ArtisansList from '../ui/artisans/artisansList';
+
 export const metadata: Metadata = {
   title: 'Artisans',
 };
