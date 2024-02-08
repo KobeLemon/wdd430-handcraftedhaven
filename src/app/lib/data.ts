@@ -20,7 +20,7 @@ export async function getUserByEmail(email:string) {
   }
 }
 
-export async function getArtisanById(_id: number){
+export async function getArtisanById(_id: string){
   noStore();
   try {
       const artisan = await sql`SELECT * FROM HandcraftedHavenArtisans WHERE id=${_id}`
@@ -159,8 +159,8 @@ export async function getCategories(){
 export async function getXAmountTopProducts(limit: number) {
   noStore();
   try {
-    const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category 
-                                FROM HandcraftedHavenProducts 
+    const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
+                                FROM HandcraftedHavenProducts
                                 LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
                                 WHERE HandcraftedHavenProducts.rating = 5
                                 LIMIT ${limit}`;
@@ -196,7 +196,7 @@ export async function getArtisans(limit: number | null = null) {
 
     // const artisans = await query;
     const results = query.rows;
-    
+
 
     const processed = results.map(item => {
       const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));

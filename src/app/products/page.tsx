@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import ProductList from '../ui/products/ProductList';
 import { getProducts } from '../lib/data';
- 
+
 export const metadata: Metadata = {
   title: 'Products',
 };
