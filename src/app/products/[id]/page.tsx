@@ -6,6 +6,8 @@ import CartQuantityButtons from '@/app/ui/products/CartQuantityButtons';
 import { getProductById, getReviewsByProductId } from '@/app/lib/data';
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
+import StarsRating from "../../ui/products/StarsRating";
+
 export const metadata: Metadata = {
   title: 'Product',
 };
@@ -52,17 +54,23 @@ export default async function Page({
 
           <h1 className='h3 mb-1'>{ product.name }</h1>
           <p className='mb-2'>By { product.artisan_name }</p>
+
 					<p className='text-dark-grayish-blue mb-5'>{ product.category_name }</p>
+
 
           <p className='mb-8'>
             { product.description }
           </p>
 
-          <div className='mb-10 text-2xl font-bold'>
+
+          <div className='mb-8 text-2xl font-bold'>
 
             ${ product.price }
 
           </div>
+					<div className='mb-5'>
+						<StarsRating rating={ product.rating} />
+					</div>
 
           <CartQuantityButtons />
 

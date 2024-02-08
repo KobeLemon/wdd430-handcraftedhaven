@@ -7,7 +7,7 @@ export default function ProductList({ products } : { products: Product[]}) {
   return (
 
     <div className="w-full flex flex-wrap gap-5">
-  
+
       {
 
         products.map( (product : Product) => (
@@ -15,27 +15,31 @@ export default function ProductList({ products } : { products: Product[]}) {
           <ProductCard
 
             key={product.id}
-            
-            id={product.id} 
-            
+
+            id={product.id}
+
             name={product.name}
 
             description={product.description}
 
             collection={product.collection}
-            
-            category={product.category} 
-            
-            price={product.price} 
+
+            category={product.category}
+
+            price={product.price}
 
             rating={product.rating}
-            
+
             pictures={product.pictures}
-            
+
+						category_name=""
+
+						artisan_name=""
+
           />
 
         ) )
-        
+
       }
 
     </div>

@@ -15,6 +15,8 @@ export type Product = {
     medium: string;
     big: string;
   };
+	category_name: string;
+	artisan_name: string;
 }
 
 export type User = {
