@@ -3,6 +3,7 @@
 import ProductList from '../ui/products/ProductList';
 import { ChangeEvent, Suspense, useEffect, useState } from 'react';
 import { Category, Product } from '../lib/definitions';
+import { useDebouncedCallback } from 'use-debounce';
 
 type FiltersState = {
   rating: number;
@@ -20,26 +21,32 @@ export default function Page() {
   const [filteredProducts, setFilteredProducts] = useState([] as Product[]);
 
   const [filters, setFilters] = useState({} as FiltersState);
+  const clearFilters = () => {
+    setFilters({
+      rating: 0,
+      minPrice: 0,
+      maxPrice: 0,
+      category: "",
+    });
+  };
+  const selectChangeHandler = useDebouncedCallback(
+    (event: ChangeEvent) => {
+      const target = event.target as HTMLInputElement;
+      const inputNameAttribute = target.getAttribute('name') as string;
+      const inputValue = target.value;
 
-  function selectChangeHandler( event: ChangeEvent ) {
+      setFilters((prevState) => ({
+        ...prevState,
+        [inputNameAttribute]:
+          !!inputNameAttribute && inputNameAttribute.toLocaleLowerCase() !== 'category'
+            ? Number(inputValue)
+            : inputValue,
+      }));
 
-    const target = event.target as HTMLInputElement;
-  
-    const inputNameAttribute = target.getAttribute( 'name' ) as string;
-  
-    const inputValue = target.value;
-  
-    setFilters( prevState => ( { 
-      
-      ...prevState,
-      
-      [inputNameAttribute]: !! inputNameAttribute && inputNameAttribute.toLocaleLowerCase() !== 'category' ? Number( inputValue ) : inputValue 
-    
-    } ) );
-
-    console.log(filters, 'after update')
-  
-  }
+      console.log(filters, 'after update');
+    },
+    300
+  );
 
   useEffect(() => {
 
@@ -145,6 +152,15 @@ export default function Page() {
           <label>
             <input className='focus:ring-orange focus:border-orange' name="maxPrice" type="number" placeholder='Max Price' min={0} onChange={selectChangeHandler} />
           </label>
+
+          {Object.values(filters).some(Boolean) && (
+          <button
+            className=" px-4 py-2 bg-pale-orange hover:bg-gray-400 focus:outline-none focus:ring focus:border-orange"
+            onClick={clearFilters}
+          >
+            Clear Filters
+          </button>
+        )}
 
         </div>
 
