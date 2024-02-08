@@ -10,7 +10,7 @@ export default async function ArtisanProfile({id, name, description, pictures} :
 
 	return (
 		<>
-			<div className="flex items-center gap-16 p-16">
+			<div className="flex flex-col items-center gap-4 p-16 md:flex-row md:gap-16">
 
 				<div className="relative aspect-video md:aspect-square">
 					<Image
@@ -23,13 +23,13 @@ export default async function ArtisanProfile({id, name, description, pictures} :
 				</div>
 
 				<div className="py-4">
-					<h1 className="text-4xl">{name}</h1>
-					<h2 className="text-xl text-center">{description}</h2>
+					<h1 className="text-3xl text-center mb-1 md:text-4xl md:text-left">{name}</h1>
+					<p className="text-center md:text-left">{description}</p>
 				</div>
 
 			</div>
 
-			<div className="border-t-2 p-5">
+			<div className="flex flex-col items-center justify-center border-t-2 p-5">
 				<h3 className="text-xl text-center">{name}&apos;s Products</h3>
 				<ProductList products={products} />
 			</div>

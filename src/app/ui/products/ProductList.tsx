@@ -6,7 +6,7 @@ export default function ProductList({ products } : { products: Product[]}) {
 
   return (
 
-    <div className="w-full flex flex-wrap gap-5">
+    <div className="w-full flex flex-wrap gap-5 justify-evenly">
 
       {
 
