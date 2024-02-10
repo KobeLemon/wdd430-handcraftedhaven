@@ -57,7 +57,7 @@ export default function ArtisanProfileEdit({id, name, description, pictures} : A
 
 	return (
 		<>
-			{showImageContainer == true && <ChangeImageContainer id={parseInt(id)} />}
+			{showImageContainer == true && <ChangeImageContainer id={parseInt(id)} handler={handleShowImageContainer} />}
 			<form className="flex flex-col flex-wrap items-center gap-4 p-16 md:flex-row md:gap-16"
 			onSubmit={onSubmitForm}>
 

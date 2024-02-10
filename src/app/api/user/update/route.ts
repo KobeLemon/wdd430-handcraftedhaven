@@ -1,7 +1,5 @@
 'use server'
-import { NextApiRequest, NextApiResponse } from 'next';
 import { updateArtisanProperties } from '@/app/lib/actions'
-import { request } from 'http';
 
 export async function POST(req:Request){
     if(req.method !== 'POST'){

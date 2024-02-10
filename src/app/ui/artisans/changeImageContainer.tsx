@@ -6,7 +6,7 @@ import { Artisan } from "@/app/lib/definitions";
 import ProfileInput from './profileInput'
 import Error from 'next/error';
 
-export default function ChangeImageContainer({id}:{id:number}){
+export default function ChangeImageContainer({id, handler}:{id:number, handler:any}){
     const [selectedImage, setSelectedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [uploadError, setUploadError] = useState();
@@ -35,6 +35,7 @@ export default function ChangeImageContainer({id}:{id:number}){
                 },
 			})
             console.log(result)
+            console.log('isse')
             imageURL = await result.text()
         } catch (error: any) {
             setUploadError(error.message);
@@ -57,6 +58,7 @@ export default function ChangeImageContainer({id}:{id:number}){
 
     return (
         <div className='absolute flex flex-col left-1/4 top-1/4 w-1/2 h-1/2 z-10 bg-grayish-blue artisan-change-image-container'>
+            <button onClick={handler}>X</button>
             <input id='uploaded-image' type="file" accept="image/*" onChange={handleImageChange} />
             <button onClick={handleUpload} disabled={!selectedImage || isLoading}>
                 {isLoading ? 'Uploading...' : 'Upload'}

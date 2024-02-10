@@ -14,6 +14,37 @@ import {
 
 export const runtime = 'edge'
 
+export async function updateProductProperties(name:string, description:string, price:string, category:number, pictures:Array<string>, id:string|number){
+  try {
+    const query = {
+      text: `UPDATE handcraftedhavenproducts SET name = $1, description = $2, price= $3, category = $4, pictures = $5 WHERE id= $6`,
+      values: [name, description, price, category, pictures, id]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
+export async function createProduct(name:string, description:string, price:string, category:number, collection:string, artisan_id:string|number, pictures:Array<string>){
+  const product_id = crypto.randomUUID()
+
+  try {
+    const query = {
+      text: `
+      INSERT INTO HandcraftedHavenProducts (id, name, description, price, rating, category, collection, artisan_id, pictures)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+    `,
+      values: [product_id, name, description, price, 0, category, collection, artisan_id, pictures]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
 export async function updateArtisanProperties(name:string, description:string, pictures:Array<string>, id:string|number){
   try {
     const query = {

@@ -5,7 +5,7 @@ import { Category } from "@/app/lib/definitions";
 
 
 
-export default function CreateProductButton({id, categories}:{id:number, categories:Array<Category>}){
+export default function CreateProductButton({id, collection, categories}:{id:number, collection:string, categories:Array<Category>}){
 
     const [showProductContainer, setShowProductContainer] = useState(false)
 
@@ -18,7 +18,7 @@ export default function CreateProductButton({id, categories}:{id:number, categor
         <>
         <button className='flex artisan-edit-button mx-auto'
 		onClick={handleShowProductContainer}>New Product +</button>
-        {showProductContainer && <CreateProduct id={id} toggle={handleShowProductContainer} categories={categories}/>}
+        {showProductContainer && <CreateProduct id={id} collection={collection} toggle={handleShowProductContainer} categories={categories}/>}
         </>
     )
 }

@@ -4,6 +4,7 @@ import { getArtisanById, getCategories, getProductsByArtisan } from '../../lib/d
 import ArtisanProfileEdit from '../../ui/artisans/artisanProfileEdit';
 import ProductList from '@/app/ui/products/ProductList';
 import CreateProductButton from '@/app/ui/products/productContainerButton';
+import ProductListEdit from '@/app/ui/products/ProductListEdit';
 
 export const metadata: Metadata = {
   title: 'User Profile',
@@ -40,8 +41,8 @@ export default async function Page({ params }: { params: { id: string } }) {
 			/>
 			<div className="flex flex-col items-center justify-center border-t-2 p-5">
 				<h3 className="text-xl text-center">Your Products</h3>
-				<CreateProductButton id={parseInt(artisan.id)} categories={categories}/>
-				<ProductList products={products} />
+				<CreateProductButton id={parseInt(artisan.id)} collection={artisan.collection} categories={categories}/>
+				<ProductListEdit products={products} categories={categories}/>
 			</div>
     </main>
   );

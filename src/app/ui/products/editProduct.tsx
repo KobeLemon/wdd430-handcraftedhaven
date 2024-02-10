@@ -9,7 +9,7 @@ import { Toaster } from 'sonner';
 import StarsRating from "../../ui/products/StarsRating";
 import { MouseEventHandler, useState } from 'react';
 import UploadImage from './uploadImage';
-import { Category } from '@/app/lib/definitions';
+import { Category, Product } from '@/app/lib/definitions';
 
 export const metadata: Metadata = {
   title: 'Product',
@@ -17,31 +17,34 @@ export const metadata: Metadata = {
 
 
 
-export default function CreateProduct({id, collection, toggle, categories}:{id:number, collection:string, toggle: any, categories:Array<Category>}) {
+export default function EditProduct({id, name, category,
+  price, description, collection, pictures, toggle, categories}:
+  {id:number, name:string, category:string, price:string, description:string, collection:string,
+    pictures:any, toggle:any, categories:Array<Category>}) {
   console.log(collection)
   const [uploadError, setUploadError] = useState()
 
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
-  const [name, setName] = useState('Product Name')
+  const [_name, setName] = useState(name)
 
   const changeName = (e:any) => {
     setName(e.target.value)
   }
 
-  const [description, setDescription] = useState('Description Example')
+  const [_description, setDescription] = useState(description)
 
   const changeDescription = (e:any) => {
     setDescription(e.target.value)
   }
 
-  const [price, setPrice] = useState('10.54')
+  const [_price, setPrice] = useState(price)
 
   const changePrice = (e:any) => {
     setPrice(e.target.value)
   }
 
-  const [category, setCategory] = useState('10.54')
+  const [_category, setCategory] = useState(category)
 
   const changeCategory = (e:any) => {
     setCategory(e.target.value)

@@ -1,27 +1,26 @@
 'use server'
 import { NextApiRequest, NextApiResponse } from 'next';
-import { changeArtisanImage } from '@/app/lib/actions'
+import { createProduct, updateArtisanProperties } from '@/app/lib/actions'
 import { request } from 'http';
 
 export async function POST(req:Request){
     if(req.method !== 'POST'){
         return new Response(JSON.stringify({ message: 'Method Not Allowed' }),{
-            status:200, 
-            statusText:'OK', 
+            status:500, 
+            statusText:'Internal Server Error', 
             headers: {
             'Content-Type': 'application/json',
             }
         });
     }
-    const {url, id} = await req.json()
-    console.log(url)
-    console.log(id)
+    const {name, description, price, category, collection, artisan_id, picture_url} = await req.json()
 
     try{
-        const pictures = [url, url, url]
+        const pictures = [picture_url, picture_url, picture_url]
         console.log(pictures)
-        await changeArtisanImage(pictures, id)
-        return new Response(JSON.stringify({ message: 'Artisan image was updated.' }),{
+        await createProduct(name,description,price,category,collection,artisan_id,pictures)
+
+        return new Response(JSON.stringify({ message: 'Product was created.' }),{
             status:200, 
             statusText:'OK', 
             headers: {
@@ -30,8 +29,8 @@ export async function POST(req:Request){
         })
     
     } catch(error){
-        console.error('Error updating artisan profile:', error);
-        return new Response(JSON.stringify({ message: 'Artisan image failed to update.' }),{
+        console.error('Error creating product profile:', error);
+        return new Response(JSON.stringify({ message: 'Product failed to be created.' }),{
             status:500, 
             statusText:'INTERNAL SERVER ERROR', 
             headers: {
