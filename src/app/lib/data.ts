@@ -11,9 +11,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 export async function getUserByEmail(email:string) {
   noStore();
   try {
-    const user =
-      await sql`
-			SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
+    const user = await sql`SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -169,10 +167,10 @@ export async function getProductsByArtisan(id: string){
                 WHERE HandcraftedHavenProducts.artisan_id = ${id}`
       const results = products.rows;
       const processed = results.map(item => {
-        console.log(item)
+        //console.log(item)
         const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
-        console.log(item)
+        //console.log(item)
 
         return item as Product;
       })
@@ -245,7 +243,7 @@ export async function getArtisans(limit: number | null = null) {
 
       return item as Artisan;
     });
-    console.log(processed)
+    //console.log(processed)
     return processed as Array<Artisan>;
   } catch (error) {
     console.error('Failed to fetch artisans:', error);

@@ -2,10 +2,8 @@
 import { useEffect, useState } from "react";
 import  {ShoppingCart , ShoppingCartProvider } from "@/app/ui/header/shopping-cart";
 import Search from "@/app/ui/header/search";
-import Profile from "@/app/ui/header/profile";
 import Logo from "@/app/ui/header/logo";
 import { Suspense } from "react";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 function AuthButton() {
@@ -18,7 +16,7 @@ function AuthButton() {
 				<div className="flex gap-5">
 					<button onClick={() => signOut()}>Sign Out</button>
 					<p>|</p>
-					<a href="/profile/1">Go to {session?.user?.name}&apos;s Profile</a>
+					<a href="/profile">Go to {session?.user?.name}&apos;s Profile</a>
 					<p>|</p>
 				</div>
 			</>
@@ -27,7 +25,7 @@ function AuthButton() {
 		return (
 			<>
 				<div className="flex gap-5">
-					<button onClick={() => signIn()}>Sign In</button>
+					<button onClick={() => signIn() }>Sign In</button>
 					<p>|</p>
 				</div>
 			</>

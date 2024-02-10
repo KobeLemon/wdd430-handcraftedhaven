@@ -10,7 +10,7 @@ import artThreeImage from '../../public/images/product-3.jpg';
 import artisanOneImage from '../../public/images/artisan-1.jpg';
 import artisanTwoImage from '../../public/images/artisan-2.jpg';
 import artisanThreeImage from '../../public/images/artisan-3.jpg';
-import { getArtisans, getXAmountTopProducts } from "./lib/data"
+import { getArtisans, getXAmountTopProducts, getUserByEmail } from "./lib/data"
 interface HeroData {
     header: string,
     subHeader: string
@@ -89,6 +89,11 @@ export default async function Page() {
 		// UNCOMMENT THESE LINES WHEN DATABASE IS WORKING
     const productsCardData = await getXAmountTopProducts(3)
     const artisansCardData = await getArtisans(3)
+		// const userEmail = await getUserByEmail('DannyRoberts-Littel@crafts.net');
+		// console.log('\n\n\n\n\n\nuserEmail:');
+		// console.log(userEmail);
+		// console.log('\n\n\n\n\n\n');
+
 
     return (
         <>
