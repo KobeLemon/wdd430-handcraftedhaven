@@ -21,14 +21,7 @@ export default function Page() {
   const [filteredProducts, setFilteredProducts] = useState([] as Product[]);
 
   const [filters, setFilters] = useState({} as FiltersState);
-  const clearFilters = () => {
-    setFilters({
-      rating: 0,
-      minPrice: 0,
-      maxPrice: 0,
-      category: "",
-    });
-  };
+  
   const selectChangeHandler = useDebouncedCallback(
     (event: ChangeEvent) => {
       const target = event.target as HTMLInputElement;
@@ -153,14 +146,7 @@ export default function Page() {
             <input className='focus:ring-orange focus:border-orange' name="maxPrice" type="number" placeholder='Max Price' min={0} onChange={selectChangeHandler} />
           </label>
 
-          {Object.values(filters).some(Boolean) && (
-          <button
-            className=" px-4 py-2 bg-pale-orange hover:bg-gray-400 focus:outline-none focus:ring focus:border-orange"
-            onClick={clearFilters}
-          >
-            Clear Filters
-          </button>
-        )}
+
 
         </div>
 
