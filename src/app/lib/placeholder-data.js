@@ -167,7 +167,7 @@ function makePerson(){
     newArtisan.picture.small = image
     newArtisan.picture.medium = image
     newArtisan.picture.big = image
-    
+
     makeProduct(newArtisan.collection)
     makeProduct(newArtisan.collection)
     makeProduct(newArtisan.collection)
@@ -198,10 +198,10 @@ function main(){
     HandcraftedHavenArtisans.sort((a, b) => a.id - b.id);
     HandcraftedHavenUsers.sort((a, b) => a.id - b.id);
 
-    console.log(HandcraftedHavenArtisans[HandcraftedHavenUsers.length-1])
-    console.log(HandcraftedHavenUsers[HandcraftedHavenUsers.length-1])
+    //console.log(HandcraftedHavenArtisans[HandcraftedHavenUsers.length-1])
+    //console.log(HandcraftedHavenUsers[HandcraftedHavenUsers.length-1])
 
-    console.log(HandcraftedHavenProducts)
+    //console.log(HandcraftedHavenProducts)
 }
 
 main();

@@ -25,7 +25,7 @@ const heroData: HeroData = {
 
 // const productsCardData = [
 //     {
-//       href: "/products/1",  
+//       href: "/products/1",
 //       imageData: {
 //         src: artOneImage,
 //         alt: "Image 1",
@@ -34,7 +34,7 @@ const heroData: HeroData = {
 //       description: "Handcrafted Ceremonial Bull Clay Scuplture",
 //     },
 //     {
-//       href: "/products/2",  
+//       href: "/products/2",
 //       imageData: {
 //         src: artTwoImage,
 //         alt: "Image 2",
@@ -43,7 +43,7 @@ const heroData: HeroData = {
 //       description: "Handmade cement jar with wooden spoons.",
 //     },
 //     {
-//         href: "/products/3",  
+//         href: "/products/3",
 //         imageData: {
 //           src: artThreeImage,
 //           alt: "Image 3",
@@ -55,7 +55,7 @@ const heroData: HeroData = {
 
   const artisansCardData = [
     {
-      href: "/artisans/1",  
+      href: "/artisans/1",
       imageData: {
         src: artisanOneImage,
         alt: "Image 1",
@@ -64,7 +64,7 @@ const heroData: HeroData = {
       description: "Artisan since 2021",
     },
     {
-      href: "/artisans/2",  
+      href: "/artisans/2",
       imageData: {
         src: artisanTwoImage,
         alt: "Image 2",
@@ -73,7 +73,7 @@ const heroData: HeroData = {
       description: "Artisan since 2001",
     },
     {
-        href: "/artisans/3",  
+        href: "/artisans/3",
         imageData: {
           src: artisanThreeImage,
           alt: "Image 3",
@@ -85,10 +85,11 @@ const heroData: HeroData = {
 
 
 export default async function Page() {
-  
+
+		// UNCOMMENT THESE LINES WHEN DATABASE IS WORKING
     const productsCardData = await getXAmountTopProducts(3)
     const artisansCardData = await getArtisans(3)
-   
+
     return (
         <>
             <HeroSection image={heroImage} header={heroData.header} subHeader={heroData.subHeader}/>

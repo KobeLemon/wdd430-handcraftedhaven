@@ -125,9 +125,9 @@ function getReviewsByProductId(productID) {
                 case 1:
                     product = _a.sent();
                     results = product.rows;
-                    console.log(results);
+                    //console.log(results);
                     processed = results.map(function (item) { return item; });
-                    console.log(processed);
+                    //console.log(processed);
                     return [2 /*return*/, processed];
                 case 2:
                     error_4 = _a.sent();
@@ -241,7 +241,7 @@ function insertUserAndArtisan(user, artisan, collection) {
                 case 2:
                     _a.value = _b.sent();
                     id.value = result.value.rows[0].nextval;
-                    console.log(id);
+                    //console.log(id);
                     return [4 /*yield*/, (0, postgres_1.sql)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n      INSERT INTO HandcraftedHavenUsers (id, username, email, password)\n      VALUES (", ", ", ", ", ", ", ")\n      "], ["\n      INSERT INTO HandcraftedHavenUsers (id, username, email, password)\n      VALUES (", ", ", ", ", ", ", ")\n      "])), id.value, user.username, user.email, user.password)];
                 case 3:
                     _b.sent();
@@ -292,7 +292,7 @@ function insertUserAndArtisan(user, artisan, collection) {
                     return [4 /*yield*/, (0, postgres_1.sql)(templateObject_16 || (templateObject_16 = __makeTemplateObject(["SELECT setval('handcraftedhavenusers_id_seq', ", ", false);"], ["SELECT setval('handcraftedhavenusers_id_seq', ", ", false);"])), id.value)];
                 case 15:
                     _b.sent();
-                    console.log('User was deleted');
+                    //console.log('User was deleted');
                     return [2 /*return*/, {
                             message: 'Database Error: Failed to Create Artisan.',
                         }];
@@ -331,22 +331,22 @@ function main() {
                     return [4 /*yield*/, getArtisanByProduct(product.collection)];
                 case 8:
                     artisanByCollectionID = _a.sent();
-                    console.log('userById:');
-                    console.log(user);
-                    console.log('artisanById:');
-                    console.log(artisan);
-                    console.log('productById:');
-                    console.log(product);
-                    console.log('reviewsFromProductId:');
-                    console.log(reviews);
-                    console.log('productsByCollection:');
-                    console.log(productsByCollection);
-                    console.log('productsByCategory:');
-                    console.log(productsByCategory);
-                    console.log('artisanByProduct:');
-                    console.log(artisanByProduct);
-                    console.log('artisanByCollectionID:');
-                    console.log(artisanByCollectionID);
+                    //console.log('userById:');
+                    //console.log(user);
+                    //console.log('artisanById:');
+                    //console.log(artisan);
+                    //console.log('productById:');
+                    //console.log(product);
+                    //console.log('reviewsFromProductId:');
+                    //console.log(reviews);
+                    //console.log('productsByCollection:');
+                    //console.log(productsByCollection);
+                    //console.log('productsByCategory:');
+                    //console.log(productsByCategory);
+                    //console.log('artisanByProduct:');
+                    //console.log(artisanByProduct);
+                    //console.log('artisanByCollectionID:');
+                    //console.log(artisanByCollectionID);
                     newUser = {
                         id: 9,
                         username: "AaronBurr",
@@ -368,11 +368,11 @@ function main() {
                             big: "bgfbasd"
                         }
                     };
-                    console.log('insert test.');
+                    //console.log('insert test.');
                     return [4 /*yield*/, insertUserAndArtisan(newUser, newArtisan, newCollection)];
                 case 9:
                     result = _a.sent();
-                    console.log(result);
+                    //console.log(result);
                     return [2 /*return*/];
             }
         });

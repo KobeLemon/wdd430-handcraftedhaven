@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 import { json } from 'stream/consumers';
 import { useShoppingCart } from '../header/shopping-cart';
 import { toast } from 'sonner';
- 
+
 
 type CartProduct = {
 
@@ -16,9 +16,9 @@ type CartProduct = {
   name: string;
 
   price: number;
-  
+
   quantity: number;
-  
+
   image: string;
 
 }
@@ -55,13 +55,13 @@ export default function CartQuantityButtons() {
     const fetchProductData = async () => {
 
       const res = await fetch( `/api/products?id=${id}` );
-      
+
       const data = await res.json();
 
-      console.log( data, 'fetching data' );
+      //console.log( data, 'fetching data' );
 
       if ( product ) return;
-  
+
       setProduct( {
 
         id: data.id,
@@ -69,7 +69,7 @@ export default function CartQuantityButtons() {
         name: data.name,
 
         price: data.price,
-        
+
         image: data.pictures.small,
 
         quantity: 0
@@ -77,7 +77,7 @@ export default function CartQuantityButtons() {
       } );
 
     }
-    
+
     fetchProductData();
 
   }, [] );
@@ -85,19 +85,19 @@ export default function CartQuantityButtons() {
 
   const addToCartClickHandler = () => {
     if (quantity === 0) return;
-  
+
     let cartItems: CartProduct[] | string | null = localStorage.getItem('cart');
-  
+
     if (!cartItems) {
       let updatedCart = [{ ...product, quantity }] as CartProduct[];
       storeProduct(updatedCart);
-      
+
       setCartQuantity(getTotalCartQuantity())
     } else {
       cartItems = JSON.parse(cartItems) as CartProduct[];
-  
+
       const isProductInCart = cartItems.find((cartItem: CartProduct) => cartItem.id === product?.id);
-  
+
       if (isProductInCart) {
         let updatedCart = cartItems.map((cartItem) =>
           cartItem.id === product?.id ? { ...cartItem, quantity } : cartItem
@@ -150,13 +150,13 @@ export default function CartQuantityButtons() {
       <div>
 
         <Button
-          
+
           text='Add To Cart'
 
           disabled={ ! quantity }
 
           onClickHandler={addToCartClickHandler}
-        
+
         >
 
           <ShoppingCartIcon className='w-5 h-5 mr-2' />

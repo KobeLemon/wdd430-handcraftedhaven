@@ -21,7 +21,7 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
     try{
         result.value = await sql`SELECT nextval('handcraftedhavenusers_id_seq');`
         id.value = result.value.rows[0].nextval
-        console.log(id)
+        //console.log(id)
         await sql`
         INSERT INTO HandcraftedHavenUsers (id, username, email, password)
         VALUES (${id.value}, ${user.username}, ${user.email}, ${user.password})
@@ -64,7 +64,7 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
         DELETE FROM HandcraftedHavenCollections WHERE id=${collection.id}
         `
         await sql`SELECT setval('handcraftedhavenusers_id_seq', ${id.value}, false);`
-        console.log('User was deleted')
+        //console.log('User was deleted')
         return {
           message: 'Database Error: Failed to Create Artisan.',
         };

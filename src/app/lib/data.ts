@@ -12,7 +12,8 @@ export async function getUserByEmail(email:string) {
   noStore();
   try {
     const user =
-      await sql`SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
+      await sql`
+			SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -25,8 +26,8 @@ export async function getArtisanById(_id: string){
   try {
       const artisan = await sql`SELECT * FROM HandcraftedHavenArtisans WHERE id=${_id}`
       const rawObj = artisan.rows[0];
-      const picArray = JSON.parse(rawObj.pictures[0].replace("{", "[").replace("}", "]"))
-      rawObj.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
+      const picArray = rawObj.pictures[0].split(',')
+      rawObj.pictures = {small: picArray[0], medium: picArray[0], big: picArray[0]}
 
       return rawObj as Artisan
   } catch (error) {
@@ -38,24 +39,24 @@ export async function getArtisanById(_id: string){
 export async function getProductById(_id: string){
   noStore();
   try {
-		const product = await sql`SELECT * FROM HandcraftedHavenProducts WHERE id=${_id}`
-		const rawObj = product.rows[0];
-		const artisanID = rawObj.artisan_id;
-		const full_product = await sql`
-			SELECT
-				HandcraftedHavenProducts.*,
-				HandcraftedHavenArtisans.name as artisan_name,
-				HandcraftedHavenCategories.name as category_name
-			FROM HandcraftedHavenProducts
-			INNER JOIN HandcraftedHavenArtisans
-				ON HandcraftedHavenProducts.artisan_id = HandcraftedHavenArtisans.id
-			INNER JOIN HandcraftedHavenCategories
-				ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
-			WHERE
-				HandcraftedHavenProducts.artisan_id = ${artisanID}
-				AND HandcraftedHavenProducts.id = ${_id}`;
-		const rawFullObj = full_product.rows[0];
-    const picArray = JSON.parse(rawFullObj.pictures[0].replace("{", "[").replace("}", "]"))
+        const product = await sql`SELECT * FROM HandcraftedHavenProducts WHERE id=${_id}`
+        const rawObj = product.rows[0];
+        const artisanID = rawObj.artisan_id;
+        const full_product = await sql`
+            SELECT
+                HandcraftedHavenProducts.*,
+                HandcraftedHavenArtisans.name as artisan_name,
+                HandcraftedHavenCategories.name as category_name
+            FROM HandcraftedHavenProducts
+            INNER JOIN HandcraftedHavenArtisans
+                ON HandcraftedHavenProducts.artisan_id = HandcraftedHavenArtisans.id
+            INNER JOIN HandcraftedHavenCategories
+                ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+            WHERE
+                HandcraftedHavenProducts.artisan_id = ${artisanID}
+                AND HandcraftedHavenProducts.id = ${_id}`;
+        const rawFullObj = full_product.rows[0];
+    const picArray = rawFullObj.pictures[0].split(',')
     rawFullObj.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
     return rawFullObj as Product;
@@ -86,7 +87,7 @@ export async function getProductsByCollection(collectionID: string){
       const product = await sql`SELECT * FROM HandcraftedHavenProducts WHERE collection=${collectionID}`
       const results = product.rows;
       const processed = results.map(item => {
-        const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"))
+        const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
         return item as Product;
@@ -106,7 +107,7 @@ export async function getProductsByCategory(categoryID: number){
       const results = products.rows;
 
       const processed = results.map(item => {
-        const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"))
+        const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
         return item as Product;
@@ -129,7 +130,7 @@ export async function getArtisanByProduct(product: string | Product){
   try {
       const product = await sql`SELECT * FROM HandcraftedHavenArtisans WHERE collection=${value}`
       const results = product.rows[0];
-      const picArray = JSON.parse(results.pictures[0].replace("{", "[").replace("}", "]"))
+      const picArray = results.pictures[0].split(',')
       results.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
       return results as Artisan
@@ -145,7 +146,7 @@ export async function getProducts(){
       const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category FROM HandcraftedHavenProducts LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id`
       const results = products.rows;
       const processed = results.map(item => {
-        const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"))
+        const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
         return item as Product;
@@ -162,14 +163,16 @@ export async function getProductsByArtisan(id: string){
   noStore();
   try {
       const products = await sql`
-			SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
-				FROM HandcraftedHavenProducts
-				LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
-				WHERE HandcraftedHavenProducts.artisan_id = ${id}`
+            SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
+                FROM HandcraftedHavenProducts
+                LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+                WHERE HandcraftedHavenProducts.artisan_id = ${id}`
       const results = products.rows;
       const processed = results.map(item => {
-        const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"))
+        console.log(item)
+        const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
+        console.log(item)
 
         return item as Product;
       })
@@ -205,7 +208,7 @@ export async function getXAmountTopProducts(limit: number) {
 
     const results = products.rows;
     const processed = results.map(item => {
-      const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));
+      const picArray = item.pictures[0].split(',');
       item.pictures = { small: picArray[0], medium: picArray[1], big: picArray[2] };
 
       return item as Product;
@@ -237,7 +240,7 @@ export async function getArtisans(limit: number | null = null) {
 
 
     const processed = results.map(item => {
-      const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));
+      const picArray = item.pictures[0].split(',');
       item.pictures = { small: picArray[0], medium: picArray[1], big: picArray[2] };
 
       return item as Artisan;
