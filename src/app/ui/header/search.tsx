@@ -7,7 +7,7 @@ import { useDebouncedCallback } from 'use-debounce';
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams()
   const handleSearch = useDebouncedCallback((term) => {
-    //console.log(term)
+    console.log(term)
   }, 300);
   return (
     <div className="relative flex flex-shrink-0 h-10 w-24 md:w-40">

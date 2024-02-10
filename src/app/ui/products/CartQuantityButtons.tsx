@@ -58,7 +58,7 @@ export default function CartQuantityButtons() {
 
       const data = await res.json();
 
-      //console.log( data, 'fetching data' );
+      console.log( data, 'fetching data' );
 
       if ( product ) return;
 

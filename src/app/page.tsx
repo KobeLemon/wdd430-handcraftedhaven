@@ -21,8 +21,6 @@ const heroData: HeroData = {
     subHeader: "Connecting Artisans with Connoisseurs"
 }
 
-
-
 // const productsCardData = [
 //     {
 //       href: "/products/1",
@@ -86,14 +84,8 @@ const heroData: HeroData = {
 
 export default async function Page() {
 
-		// UNCOMMENT THESE LINES WHEN DATABASE IS WORKING
-    const productsCardData = await getXAmountTopProducts(3)
-    const artisansCardData = await getArtisans(3)
-		// const userEmail = await getUserByEmail('DannyRoberts-Littel@crafts.net');
-		// console.log('\n\n\n\n\n\nuserEmail:');
-		// console.log(userEmail);
-		// console.log('\n\n\n\n\n\n');
-
+    const productsCardData = await getXAmountTopProducts(3);
+    const artisansCardData = await getArtisans(3);
 
     return (
         <>

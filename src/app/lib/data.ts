@@ -11,8 +11,14 @@ import { unstable_noStore as noStore } from 'next/cache';
 export async function getUserByEmail(email:string) {
   noStore();
   try {
-    const user = await sql`SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
-    return user.rows[0] as User;
+		let response
+    const user = await sql`SELECT email FROM HandcraftedHavenUsers WHERE email=${email}`;
+		if (user.rows.length > 0 ) {
+			response = user.rows[0] as User;
+		} else {
+			response = false;
+		}
+		return response;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -33,6 +39,7 @@ export async function getArtisanById(_id: string){
       throw new Error('Failed to fetch artisan.');
   }
 }
+
 
 export async function getProductById(_id: string){
   noStore();
@@ -167,10 +174,10 @@ export async function getProductsByArtisan(id: string){
                 WHERE HandcraftedHavenProducts.artisan_id = ${id}`
       const results = products.rows;
       const processed = results.map(item => {
-        //console.log(item)
+        console.log(item)
         const picArray = item.pictures[0].split(',')
         item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
-        //console.log(item)
+        console.log(item)
 
         return item as Product;
       })
@@ -243,7 +250,7 @@ export async function getArtisans(limit: number | null = null) {
 
       return item as Artisan;
     });
-    //console.log(processed)
+    console.log(processed)
     return processed as Array<Artisan>;
   } catch (error) {
     console.error('Failed to fetch artisans:', error);

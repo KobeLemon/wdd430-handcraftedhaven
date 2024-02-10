@@ -23,7 +23,7 @@ async function seedUsers(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenUsers" table`);
+      console.log(`Created "HandcraftedHavenUsers" table`);
 
       const insertedUsers = [];
 
@@ -38,7 +38,7 @@ async function seedUsers(client) {
         `)
       }
 
-      //console.log(`Seeded ${insertedUsers.length} users`);
+      console.log(`Seeded ${insertedUsers.length} users`);
 
       return {
         createTable,
@@ -64,7 +64,7 @@ async function seedArtisans(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenArtisans" table`);
+      console.log(`Created "HandcraftedHavenArtisans" table`);
       const insertedArtisans=[]
       // Insert data into the "users" table
       for(let i = 0; i < HandcraftedHavenArtisans.length; i++){
@@ -76,7 +76,7 @@ async function seedArtisans(client) {
         `);
       }
 
-      //console.log(`Seeded ${insertedArtisans.length} artisans`);
+      console.log(`Seeded ${insertedArtisans.length} artisans`);
 
       return {
         createTable,
@@ -99,7 +99,7 @@ async function seedArtisans(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenCategories" table`);
+      console.log(`Created "HandcraftedHavenCategories" table`);
 
       // Insert data into the "users" table
       const insertedCategories = await Promise.all(
@@ -112,7 +112,7 @@ async function seedArtisans(client) {
         }),
       );
 
-      //console.log(`Seeded ${insertedCategories.length} categories`);
+      console.log(`Seeded ${insertedCategories.length} categories`);
 
       return {
         createTable,
@@ -135,7 +135,7 @@ async function seedCollections(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenCollections" table`);
+      console.log(`Created "HandcraftedHavenCollections" table`);
 
       // Insert data into the "collections" table
       const insertedCollections = await Promise.all(
@@ -148,7 +148,7 @@ async function seedCollections(client) {
         }),
       );
 
-      //console.log(`Seeded ${insertedCollections.length} collections`);
+      console.log(`Seeded ${insertedCollections.length} collections`);
 
       return {
         createTable,
@@ -177,7 +177,7 @@ async function seedCollections(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenProducts" table`);
+      console.log(`Created "HandcraftedHavenProducts" table`);
 
       // Insert data into the "users" table
       const insertedProducts = await Promise.all(
@@ -190,7 +190,7 @@ async function seedCollections(client) {
         }),
       );
 
-      //console.log(`Seeded ${insertedProducts.length} products`);
+      console.log(`Seeded ${insertedProducts.length} products`);
 
       return {
         createTable,
@@ -216,7 +216,7 @@ async function seedCollections(client) {
         );
       `;
 
-      //console.log(`Created "HandcraftedHavenReviews" table`);
+      console.log(`Created "HandcraftedHavenReviews" table`);
 
       // Insert data into the "collections" table
       const insertedReviews = await Promise.all(
@@ -229,7 +229,7 @@ async function seedCollections(client) {
         }),
       );
 
-      //console.log(`Seeded ${insertedReviews.length} reviews`);
+      console.log(`Seeded ${insertedReviews.length} reviews`);
 
       return {
         createTable,

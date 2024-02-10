@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import CheckProfileExists from './checkProfileExists';
+import Profile from './Profile';
 
 export const metadata: Metadata = {
-  title: 'Account Creation',
+  title: 'Artisan Profile',
 };
 
 export default function Page() {
 	return (
-		<CheckProfileExists/>
+		<Profile/>
 	)
 }

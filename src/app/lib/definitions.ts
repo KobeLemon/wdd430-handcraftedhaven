@@ -26,6 +26,19 @@ export type User = {
   password: string;
 };
 
+export type ArtisanUser = {
+	id: string;
+  name: string;
+  description: string;
+  collection: string;
+  pictures: {
+    small: string;
+    medium:string;
+    big:   string;
+  };
+  email: string;
+}
+
 export type Collection = {
   id: string;
   name: string;

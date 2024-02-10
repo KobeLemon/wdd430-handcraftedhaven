@@ -26,6 +26,11 @@ const nextConfig = {
         port: "",
         // pathname: '/my-bucket/**',
       },
+			{
+        protocol:"https",
+        hostname: "s4v7372ik6wn7j5n.public.blob.vercel-storage.com",
+        port: "",
+      }
     ],
   },
 };

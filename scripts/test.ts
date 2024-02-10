@@ -55,9 +55,9 @@ export async function getReviewsByProductId(productID: string){
   try {
       const product = await sql`SELECT * FROM HandcraftedHavenReviews WHERE productId=${productID}`
       const results = product.rows;
-      //console.log(results)
+      console.log(results)
       const processed = results.map(item => item as Review);
-      //console.log(processed)
+      console.log(processed)
 
       return processed as Array<Review>;
   } catch (error) {
@@ -127,7 +127,7 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
   try{
       result.value = await sql`SELECT nextval('handcraftedhavenusers_id_seq');`
       id.value = result.value.rows[0].nextval
-      //console.log(id)
+      console.log(id)
       await sql`
       INSERT INTO HandcraftedHavenUsers (id, username, email, password)
       VALUES (${id.value}, ${user.username}, ${user.email}, ${user.password})
@@ -170,7 +170,7 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
       DELETE FROM HandcraftedHavenCollections WHERE id=${collection.id}
       `
       await sql`SELECT setval('handcraftedhavenusers_id_seq', ${id.value}, false);`
-      //console.log('User was deleted')
+      console.log('User was deleted')
       return {
         message: 'Database Error: Failed to Create Artisan.',
       };
@@ -187,22 +187,22 @@ async function main() {
   const productsByCategory = await getProductsByCategory(1)
   const artisanByProduct = await getArtisanByProduct(product)
   const artisanByCollectionID = await getArtisanByProduct(product.collection)
-  //console.log('userById:')
-  //console.log(user)
-  //console.log('artisanById:')
-  //console.log(artisan)
-  //console.log('productById:')
-  //console.log(product)
-  //console.log('reviewsFromProductId:')
-  //console.log(reviews)
-  //console.log('productsByCollection:')
-  //console.log(productsByCollection)
-  //console.log('productsByCategory:')
-  //console.log(productsByCategory)
-  //console.log('artisanByProduct:')
-  //console.log(artisanByProduct)
-  //console.log('artisanByCollectionID:')
-  //console.log(artisanByCollectionID)
+  console.log('userById:')
+  console.log(user)
+  console.log('artisanById:')
+  console.log(artisan)
+  console.log('productById:')
+  console.log(product)
+  console.log('reviewsFromProductId:')
+  console.log(reviews)
+  console.log('productsByCollection:')
+  console.log(productsByCollection)
+  console.log('productsByCategory:')
+  console.log(productsByCategory)
+  console.log('artisanByProduct:')
+  console.log(artisanByProduct)
+  console.log('artisanByCollectionID:')
+  console.log(artisanByCollectionID)
 
 
   const newUser = {
@@ -227,9 +227,9 @@ async function main() {
     }
   }
 
-  //console.log('insert test.')
+  console.log('insert test.')
   const result = await insertUserAndArtisan(newUser, newArtisan, newCollection)
-  //console.log(result)
+  console.log(result)
 }
 
 //run this to undo the test
