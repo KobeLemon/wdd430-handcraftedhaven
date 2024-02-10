@@ -8,7 +8,7 @@ export default function ProductCard({ id, name, category, price, description, co
 
   return (
 
-    <Link className="flex-1" href={`/products/${id}`}>
+    <Link className="flex flex-col items-start justify-center w-full md:w-auto" href={`/products/${id}`}>
 
       <div className='relative h-48 aspect-square sm:aspect-video'>
 

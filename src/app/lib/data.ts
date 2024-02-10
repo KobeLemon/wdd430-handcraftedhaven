@@ -20,7 +20,7 @@ export async function getUserByEmail(email:string) {
   }
 }
 
-export async function getArtisanById(_id: number){
+export async function getArtisanById(_id: string){
   noStore();
   try {
       const artisan = await sql`SELECT * FROM HandcraftedHavenArtisans WHERE id=${_id}`
@@ -38,12 +38,27 @@ export async function getArtisanById(_id: number){
 export async function getProductById(_id: string){
   noStore();
   try {
-    const product = await sql`SELECT * FROM HandcraftedHavenProducts WHERE id=${_id}`
-    const rawObj = product.rows[0];
-    const picArray = JSON.parse(rawObj.pictures[0].replace("{", "[").replace("}", "]"))
-    rawObj.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
+		const product = await sql`SELECT * FROM HandcraftedHavenProducts WHERE id=${_id}`
+		const rawObj = product.rows[0];
+		const artisanID = rawObj.artisan_id;
+		const full_product = await sql`
+			SELECT
+				HandcraftedHavenProducts.*,
+				HandcraftedHavenArtisans.name as artisan_name,
+				HandcraftedHavenCategories.name as category_name
+			FROM HandcraftedHavenProducts
+			INNER JOIN HandcraftedHavenArtisans
+				ON HandcraftedHavenProducts.artisan_id = HandcraftedHavenArtisans.id
+			INNER JOIN HandcraftedHavenCategories
+				ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+			WHERE
+				HandcraftedHavenProducts.artisan_id = ${artisanID}
+				AND HandcraftedHavenProducts.id = ${_id}`;
+		const rawFullObj = full_product.rows[0];
+    const picArray = JSON.parse(rawFullObj.pictures[0].replace("{", "[").replace("}", "]"))
+    rawFullObj.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
 
-    return rawObj as Product;
+    return rawFullObj as Product;
   } catch (error) {
     console.error('Failed to fetch product:', error);
     throw new Error('Failed to fetch product.');
@@ -143,6 +158,29 @@ export async function getProducts(){
   }
 }
 
+export async function getProductsByArtisan(id: string){
+  noStore();
+  try {
+      const products = await sql`
+			SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
+				FROM HandcraftedHavenProducts
+				LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+				WHERE HandcraftedHavenProducts.artisan_id = ${id}`
+      const results = products.rows;
+      const processed = results.map(item => {
+        const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"))
+        item.pictures = {small: picArray[0], medium: picArray[1], big: picArray[2]}
+
+        return item as Product;
+      })
+
+      return processed as Array<Product>
+  } catch (error) {
+      console.error('Failed to fetch product:', error);
+      throw new Error('Failed to fetch product.');
+  }
+}
+
 export async function getCategories(){
   noStore();
   try {
@@ -159,8 +197,8 @@ export async function getCategories(){
 export async function getXAmountTopProducts(limit: number) {
   noStore();
   try {
-    const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category 
-                                FROM HandcraftedHavenProducts 
+    const products = await sql`SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
+                                FROM HandcraftedHavenProducts
                                 LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
                                 WHERE HandcraftedHavenProducts.rating = 5
                                 LIMIT ${limit}`;
@@ -191,12 +229,12 @@ export async function getArtisans(limit: number | null = null) {
 
       query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
     } else {
-      query = await sql`SELECT * FROM HandcraftedHavenArtisans`
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) - 1 FROM HandcraftedHavenArtisans)`
     }
 
     // const artisans = await query;
     const results = query.rows;
-    
+
 
     const processed = results.map(item => {
       const picArray = JSON.parse(item.pictures[0].replace("{", "[").replace("}", "]"));
