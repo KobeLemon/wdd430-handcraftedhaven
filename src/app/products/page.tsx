@@ -1,13 +1,9 @@
 'use client';
 
 import ProductList from '../ui/products/ProductList';
-
 import { ChangeEvent, Suspense, useEffect, useState } from 'react';
 import { Category, Product } from '../lib/definitions';
 import { useDebouncedCallback } from 'use-debounce';
-export const metadata: Metadata = {
-  title: 'Products',
-};
 
 type FiltersState = {
   rating: number;
