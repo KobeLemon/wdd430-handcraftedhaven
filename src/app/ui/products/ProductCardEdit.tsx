@@ -58,7 +58,7 @@ export default function ProductCardEdit({id, name, category, price, description,
 
       </Link>
 
-      <button className='absolute right-5 bottom-4 w-20 h-10 artisan-edit-button' onClick={handleShowProduct}>Edit</button>
+      <button className='absolute right-5 bottom-4 w-20 h-10 font-bold bg-pale-orange hover:bg-orange' onClick={handleShowProduct}>Edit</button>
 
     </div>
     </>

@@ -99,7 +99,7 @@ export default function ArtisanProfileEdit({id, name, description, pictures} : A
 					<input hidden name='id' defaultValue={id}/>
 					<input hidden name='picture' defaultValue={pictures.big}/>
 					<div className="w-full">
-						<button type='submit' className='px-8 py-2 bg-orange text-black font-bold rounded-md'
+						<button type='submit' className='px-8 py-2 bg-[#15803d] text-white font-bold rounded-md'
 						>Save Profile</button>
 					</div>
 				
