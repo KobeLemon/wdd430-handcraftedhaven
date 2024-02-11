@@ -58,37 +58,53 @@ export default function ArtisanProfileEdit({id, name, description, pictures} : A
 	return (
 		<>
 			{showImageContainer == true && <ChangeImageContainer id={parseInt(id)} handler={handleShowImageContainer} />}
-			<form className="flex flex-col flex-wrap items-center gap-4 p-16 md:flex-row md:gap-16"
+			<form className="p-5 sm:p-10"
 			onSubmit={onSubmitForm}>
 
-				<div className="relative aspect-video md:aspect-square">
-					<button type='button' className='flex artisan-edit-button mx-auto'
-					onClick={handleShowImageContainer}>Change Image</button>
-					<Image
-						className="object-cover rounded-full"
-						src={formData.picture}
-						alt={`${name}'s Avatar`}
-						width={200}
-						height={200}
-					/>
+				<div className='sm:flex gap-x-10 mb-10'>
+
+					<div className="w-fit mb-8 sm:mb-0">
+						<div className='relative w-[200px] h-[200px] mb-2 rounded-full overflow-hidden'>
+							<Image
+								className="object-cover"
+								src={formData.picture}
+								alt={`${name}'s Avatar`}
+								fill
+							/>
+						</div>
+						<div className='text-center'>
+							<button type='button' className='border-b-2 border-b-transparent hover:border-b-orange'
+							onClick={handleShowImageContainer}>Change Image</button>
+						</div>
+						
+					</div>
+
+					<div className="flex-1 py-4">
+
+						<h3 className='mb-2 h5'>Name</h3>
+						<input name='name' value={formData.name} onChange={handleChange}
+						className="w-full mb-6 text-base text-center md:text-left focus:ring-orange focus:border-orange"/>
+
+						<h4 className='mb-2 h5'>Description</h4>
+						<input name='description' value={formData.description} onChange={handleChange}
+						className="w-full mb-4 text-base text-center md:text-left focus:ring-orange focus:border-orange"
+						/>
+
+					</div>					
+
 				</div>
 
-				<div className="py-4">
-					<h3>Name</h3>
-					<input name='name' value={formData.name} onChange={handleChange}
-					className="text-3xl text-center mb-1 md:text-4xl md:text-left artisan-input-edit"/>
+				<div className='text-center'>
 
-					<h4>Description</h4>
-					<input name='description' value={formData.description} onChange={handleChange}
-					className="text-center md:text-left artisan-input-edit"
-					/>
+					<input hidden name='id' defaultValue={id}/>
+					<input hidden name='picture' defaultValue={pictures.big}/>
+					<div className="w-full">
+						<button type='submit' className='px-8 py-2 bg-orange text-black font-bold rounded-md'
+						>Save Profile</button>
+					</div>
+				
 				</div>
-				<input hidden name='id' defaultValue={id}/>
-				<input hidden name='picture' defaultValue={pictures.big}/>
-				<div className="w-full">
-					<button type='submit' className='flex artisan-edit-button mx-auto'
-					>Save Profile</button>
-				</div>
+
 			</form>
 		</>
 	)

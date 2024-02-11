@@ -23,40 +23,43 @@ export default function ProductCardEdit({id, name, category, price, description,
     <>
     {showEditProduct && <EditProduct id={id} name={name} category={category}
     price={price} description={description} collection={collection} pictures={pictures} toggle={handleShowProduct} categories={categories}/>}
-    <div className="relative flex flex-col items-start justify-center w-full md:w-auto">
+    <div className="relative flex flex-col items-start justify-center md:w-auto">
       <Link href={`/products/${id}`}>
 
-      <div className='relative h-48 aspect-square sm:aspect-video'>
+        <div className='relative h-48 aspect-square sm:aspect-video'>
 
-        <Image 
+          <Image 
 
-          className='object-cover'
-        
-          src={pictures.small} 
+            className='object-cover'
           
-          alt='' 
+            src={pictures.small} 
+            
+            alt='' 
+            
+            fill
+
+            sizes="(max-width: 640px) 192vw, 341vw"
+            
+          />
+
+        </div>
+
+        <div className='py-4'>
+
+          <StarsRating rating={rating} />
           
-          fill
+          <div className='text-lg'>{name}</div>
 
-          sizes="(max-width: 640px) 192vw, 341vw"
-          
-        />
+          <div className='text-dark-grayish-blue mb-2'>{category}</div>
 
-      </div>
+          <div className='font-bold'>$ {price}</div>
 
-      <div className='py-4'>
+        </div>
 
-        <StarsRating rating={rating} />
-        
-        <div className='text-lg'>{name}</div>
-
-        <div className='text-dark-grayish-blue mb-2'>{category}</div>
-
-        <div className='font-bold'>$ {price}</div>
-
-      </div>
       </Link>
+
       <button className='absolute right-5 bottom-4 w-20 h-10 artisan-edit-button' onClick={handleShowProduct}>Edit</button>
+
     </div>
     </>
 

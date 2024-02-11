@@ -10,6 +10,7 @@ import StarsRating from "../../ui/products/StarsRating";
 import { MouseEventHandler, useState } from 'react';
 import UploadImage from './uploadImage';
 import { Category } from '@/app/lib/definitions';
+import { XCircleIcon } from '@heroicons/react/16/solid';
 
 export const metadata: Metadata = {
   title: 'Product',
@@ -100,35 +101,68 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
 
   return (
 
-    <div className='absolute flex flex-col left-21 bottom-20 w-3/4 z-10 bg-grayish-blue artisan-change-image-container'>
+    <div className='max-w-[100%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-grayish-blue rounded-md overflow-hidden p-5'>
 
-      <button type='button' onClick={toggle}>X</button>
+      <button className='font-bold text-black hover:text-orange transition-colors duration-300' type='button' onClick={toggle}>
+        <XCircleIcon className='w-6 h-6' />
+      </button>
 
-      <form className="h-auto" onSubmit={formSubmission}>
-        <h4>Name</h4>
-        <input name='name' type='text' value={name} onChange={changeName}/>
-        <h4>Description</h4>
-        <input name='description' type='text' value={description} onChange={changeDescription}/>
-        <h4>Price</h4>
-        <input name='price' type='text' value={price} onChange={changePrice}/>
-        <h4>Category</h4>
-        <div className='flex flex-row flex-wrap mt-2 mb-3'>
-          {categories.map((item:any) => {
-            return (
-            <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.id}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.id} type='radio' onChange={changeCategory}/>{item.name}</label>
-            )
-          })}
+      <form className="h-auto text-left" onSubmit={formSubmission}>
+
+        <div className='mb-6'>
+
+          <h4 className='mb-2 h5'>Name</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={name} onChange={changeName}/>
+
         </div>
-        <div className="flex flex-col bg-white h-auto mx-auto">
+
+        <div className='mb-6'>
+
+          <h4 className='mb-2 h5'>Description</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={description} onChange={changeDescription}/>
+
+        </div>
+
+        <div className='mb-6'>
+
+          <h4 className='mb-2 h5'>Price</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={price} onChange={changePrice}/>
+
+        </div>
+
+        <div className='mb-6'>
+
+          <h4 className='mb-2 h5'>Category</h4>
+          <div className='flex flex-col sm:grid sm:grid-cols-2 sm:gap-y-2'>
+            {categories.map((item:any) => {
+              return (
+              <label className="flex items-center gap-x-1" key={`categoryLabel${item.id}`}>
+
+                <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.id} type='radio' onChange={changeCategory}/>
+
+                <span>{item.name}</span>
+
+              </label>
+              )
+            })}
+          </div>
+
+        </div>
+
+        <div className="flex flex-col bg-white h-auto mx-auto mb-12">
           <UploadImage id={id} />
           {uploadedImageUrl && (
-                <div className="h-20" >
+              <div className="h-20" >
                 <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
-                </div>
-            )}
+              </div>
+          )}
         </div>
 
-        <button className='flex mx-auto'>Create Product</button>
+        <div className='text-center'>
+
+          <button className='px-8 py-2 bg-orange text-black font-bold rounded-md'>Create Product</button>
+
+        </div>
 
       </form>
 

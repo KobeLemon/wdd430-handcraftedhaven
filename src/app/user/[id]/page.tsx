@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 	}
 
   return (
-    <main>
+    <main className='relative'>
 			<ArtisanProfileEdit
 
 				key={artisan.id}
@@ -39,8 +39,9 @@ export default async function Page({ params }: { params: { id: string } }) {
 				collection=""
 
 			/>
-			<div className="flex flex-col items-center justify-center border-t-2 p-5">
-				<h3 className="text-xl text-center">Your Products</h3>
+      
+			<div className="border-t-2 p-5 sm:p-10">
+				<h3 className="text-center mb-1 p-5">Your Products</h3>
 				<CreateProductButton id={artisan.id} collection={artisan.collection} categories={categories}/>
 				<ProductListEdit products={products} categories={categories}/>
 			</div>
