@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
 import  {ShoppingCart , ShoppingCartProvider } from "@/app/ui/header/shopping-cart";
-import Search from "@/app/ui/header/search";
 import Logo from "@/app/ui/header/logo";
 import { Suspense } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -64,9 +63,6 @@ export default function Nav() {
         <header className="bg-light-grayish-blue col-span-full">
             <nav className="flex justify-between h-full items-center">
                 <Logo/>
-                <Suspense>
-                    <Search placeholder="Search Products"/>
-                </Suspense>
                 <div className="flex me-5 gap-5 justify-around md:me-10 md:gap-10">
                     <AuthButton/>
                     <ShoppingCart/>

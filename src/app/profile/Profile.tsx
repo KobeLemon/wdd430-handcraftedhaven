@@ -1,13 +1,15 @@
 'use client';
 
 import { useSession } from "next-auth/react";
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import AccountCreation from "../ui/artisans/accountCreation";
 import { useState, useEffect } from 'react';
 
 export default function Profile() {
 	const [ userExists, setUserExists ] = useState();
 	const [ isDataFetched, setisDataFetched ] = useState({isSet: false});
+
+	const router = useRouter()
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -16,6 +18,10 @@ export default function Profile() {
 				const response = await user.json();
 				setisDataFetched({isSet: true});
 				setUserExists(response);
+				console.log(response)
+				if (response) {
+					router.push(`/user/${response.id}`)
+				}
 			} catch (error) {
 				console.error("Failed to fetch data", error);
 			}
@@ -48,13 +54,13 @@ export default function Profile() {
 
 		console.log(session);
 
+
 		return (
 
 			isDataFetched.isSet ?
 				userExists ?
-				// TODO Change this to Nathaniel's edit profile page
 					<h1 className='text-center pt-10'>User Exists</h1>
-				:
+					:
 				<AccountCreation
 					id={userID}
 					name={userName}
