@@ -10,6 +10,7 @@ import StarsRating from "../../ui/products/StarsRating";
 import { MouseEventHandler, useState } from 'react';
 import UploadImage from './uploadImage';
 import { Category, Product } from '@/app/lib/definitions';
+import { XCircleIcon } from '@heroicons/react/16/solid';
 
 export const metadata: Metadata = {
   title: 'Product',
@@ -126,35 +127,72 @@ export default function EditProduct({id, name, category,
 
   return (
 
-    <div className='absolute flex flex-col left-21 bottom-20 w-3/4 z-10 bg-grayish-blue artisan-change-image-container'>
+    <div className='max-w-[100%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-grayish-blue rounded-md overflow-hidden p-5'>
 
-      <button type='button' onClick={toggle}>X</button>
+      <button className='absolute top-2 right-5 font-bold text-right hover:text-orange transition-colors duration-300' type='button' onClick={toggle}>
+        <XCircleIcon className='w-6 h-6' />
+      </button>
 
       <form className="h-auto" onSubmit={formSubmission}>
-        <h4>Name</h4>
-        <input name='name' type='text' value={_name} onChange={changeName}/>
-        <h4>Description</h4>
-        <input name='description' type='text' value={_description} onChange={changeDescription}/>
-        <h4>Price</h4>
-        <input name='price' type='text' value={_price} onChange={changePrice}/>
-        <h4>Category</h4>
-        <div className='flex flex-row flex-wrap mt-2 mb-3'>
-          {categories.map((item:any) => {
-              return (
-              <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.name}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name}/>{item.name}</label>
-              )
-          })}
+
+        <div className='mb-6'>
+          <h4 className='mb-2 h5'>Name</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={_name} onChange={changeName}/>
         </div>
-        <div className="flex flex-col bg-white h-auto mx-auto">
-          <UploadImage id={id} />
-          {uploadedImageUrl && (
-                <div className="h-20" >
+
+        <div className='mb-6'>
+          <h4 className='mb-2 h5'>Description</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={_description} onChange={changeDescription}/>
+        </div>
+
+        <div className='mb-6'>
+          <h4 className='mb-2 h5'>Price</h4>
+          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={_price} onChange={changePrice}/>
+        </div>
+
+        <div className='mb-6'>
+          <h4 className='mb-2 h5'>Category</h4>
+          <div className='flex flex-col sm:grid sm:grid-cols-2 sm:gap-y-2'>
+            {categories.map((item:any) => {
+                return (
+                <label className="flex items-center gap-x-1" key={`categoryLabel${item.name}`}>
+                  <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name}/>
+                  <span>{item.name}</span>
+                </label>
+                )
+            })}
+          </div>
+        </div>
+
+        <div className='block mb-12'>
+
+          <div className="flex flex-col h-auto mx-auto">
+
+            <div className='bg-white mb-2'>
+
+              <UploadImage id={id} />
+
+            </div>
+
+            {uploadedImageUrl && (
+
+              <div className="h-20" >
                 <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
-                </div>
+              </div>
+
             )}
+
+          </div>
+
         </div>
-        <button type="button" className='flex mx-auto' onClick={handleDelete}>Delete Product</button>
-        <button className='flex mx-auto'>Save Product</button>
+
+        <div className='flex flex-wrap gap-3'>
+
+          <button className='px-8 py-2 bg-[#15803d] text-white font-bold rounded-md'>Save Product</button>
+
+          <button type="button" className='px-8 py-2 bg-[#dc2626] text-white font-bold rounded-md' onClick={handleDelete}>Delete Product</button>
+
+        </div>
 
       </form>
 

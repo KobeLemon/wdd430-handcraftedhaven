@@ -14,6 +14,8 @@ type FiltersState = {
 
 export default function Page() {
 
+  const [isProductLoading, setIsProductLoading] = useState( true );
+
   const [products, setProducts] = useState([] as Product[]);
 
   const [categories, setCategories] = useState([] as Category[]);
@@ -58,6 +60,8 @@ export default function Page() {
       setFilteredProducts( productsResponse as Product[] );
 
       setCategories( categoriesResponse as Category[] );
+
+      setIsProductLoading( false );
 
       // const requests = [ 'api/products', 'api/categories' ].map( url => fetch( url ) );
 
@@ -155,14 +159,19 @@ export default function Page() {
         <div>
 
           {
+            isProductLoading ?
 
-            !! filteredProducts.length ?
-
-              <ProductList products={filteredProducts} />
+              <p className='h5 pt-10'>Loading...</p>
 
               :
 
-              <p>No product found</p>
+              !! filteredProducts.length ?
+
+                <ProductList products={filteredProducts} />
+
+                :
+
+                <p className='h5 pt-10'>No product found, adjust your filters</p>
             
           }
 
