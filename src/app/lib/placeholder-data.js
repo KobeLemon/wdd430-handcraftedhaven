@@ -1,7 +1,7 @@
 const { faker } = require('@faker-js/faker');
 const { randomInt } = require('crypto');
 require('crypto');
-const ArtisanId = {value: 0};
+const ArtisanId = {value: 1};
 
 const HandcraftedHavenCategories = [
     {
@@ -92,7 +92,7 @@ function makeReview(productID){
     HandcraftedHavenReviews.push(newReview)
 }
 
-function makeProduct(collectionString){
+function makeProduct(collectionString, art_id){
     const newProduct = {
         id: "",
         name: "",
@@ -101,6 +101,7 @@ function makeProduct(collectionString){
         rating: 0,
         category: 0,
         collection: "",
+        artisan_id:art_id,
         picture: {
             small: "",
             medium: "",
@@ -109,6 +110,7 @@ function makeProduct(collectionString){
     }
 
     newProduct.id = crypto.randomUUID()
+    newProduct.artisan_id = art_id
     newProduct.name = faker.commerce.productName()
     newProduct.description = faker.commerce.productDescription()
     newProduct.price = faker.commerce.price({min:1, max:200, dec: 2})
@@ -167,12 +169,12 @@ function makePerson(){
     newArtisan.picture.small = image
     newArtisan.picture.medium = image
     newArtisan.picture.big = image
-
-    makeProduct(newArtisan.collection)
-    makeProduct(newArtisan.collection)
-    makeProduct(newArtisan.collection)
-    makeProduct(newArtisan.collection)
-    makeProduct(newArtisan.collection)
+    
+    makeProduct(newArtisan.collection,ArtisanId.value)
+    makeProduct(newArtisan.collection,ArtisanId.value)
+    makeProduct(newArtisan.collection,ArtisanId.value)
+    makeProduct(newArtisan.collection,ArtisanId.value)
+    makeProduct(newArtisan.collection,ArtisanId.value)
 
     HandcraftedHavenArtisans.push(newArtisan)
     HandcraftedHavenCollections.push(newCollection)

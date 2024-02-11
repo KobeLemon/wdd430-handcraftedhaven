@@ -28,7 +28,7 @@ export default function Button({
 
   return (
 
-    <button className='inline-flex px-8 py-2 bg-orange text-white rounded-md disabled:opacity-80 transition-opacity duration-300' type={type ?? 'button'} disabled={disabled} onClick={onClickHandler}>
+    <button className='inline-flex px-8 py-2 bg-orange text-black font-bold rounded-md disabled:opacity-80 transition-opacity duration-300' type={type ?? 'button'} disabled={disabled} onClick={onClickHandler}>
 
       { children }
 

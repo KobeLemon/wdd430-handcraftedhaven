@@ -69,9 +69,10 @@ async function seedArtisans(client) {
       // Insert data into the "users" table
       for(let i = 0; i < HandcraftedHavenArtisans.length; i++){
         artisan = HandcraftedHavenArtisans[i]
+        const array = `${artisan.picture.small},${artisan.picture.medium},${artisan.picture.big}`
         insertedArtisans.push(client.sql`
           INSERT INTO HandcraftedHavenArtisans (name, description, collection, pictures)
-          VALUES (${artisan.name}, ${artisan.description}, ${artisan.collection}, ARRAY[${[artisan.picture.small, artisan.picture.medium, artisan.picture.big]}])
+          VALUES (${artisan.name}, ${artisan.description}, ${artisan.collection}, ARRAY[${array}])
           ON CONFLICT (id) DO NOTHING;
         `);
       }
@@ -173,6 +174,7 @@ async function seedCollections(client) {
           rating INTEGER NOT NULL,
           category INTEGER NOT NULL,
           collection UUID NOT NULL,
+          artisan_id INTEGER NOT NULL,
           pictures VARCHAR(255)[] NOT NULL
         );
       `;
@@ -182,9 +184,10 @@ async function seedCollections(client) {
       // Insert data into the "users" table
       const insertedProducts = await Promise.all(
         HandcraftedHavenProducts.map(async (product) => {
+          const array = `${product.picture.small},${product.picture.medium},${product.picture.big}`
           return client.sql`
-          INSERT INTO HandcraftedHavenProducts (id, name, description, price, rating, category, collection, pictures)
-          VALUES (${product.id}, ${product.name}, ${product.description}, ${product.price}, ${product.rating}, ${product.category}, ${product.collection}, ARRAY[${[product.picture.small, product.picture.medium, product.picture.big]}])
+          INSERT INTO HandcraftedHavenProducts (id, name, description, price, rating, category, collection, artisan_id, pictures)
+          VALUES (${product.id}, ${product.name}, ${product.description}, ${product.price}, ${product.rating}, ${product.category}, ${product.collection}, ${product.artisan_id}, ARRAY[${array}])
           ON CONFLICT (id) DO NOTHING;
         `;
         }),

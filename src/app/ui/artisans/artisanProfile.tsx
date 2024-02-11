@@ -7,6 +7,7 @@ import { getProductsByArtisan } from '../../lib/data';
 export default async function ArtisanProfile({id, name, description, pictures} : Artisan) {
 
 	const products = await getProductsByArtisan(id);
+	console.log(pictures)
 
 	return (
 		<>
