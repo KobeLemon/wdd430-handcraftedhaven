@@ -47,11 +47,9 @@ export default function EditProduct({id, name, category,
 
   const [_category, setCategory] = useState(category)
   console.log(_category)
-  console.log(category)
 
   const changeCategory = (e:any) => {
     setCategory(e.target.value)
-    console.log(category)
   }
 
   const handleDelete = async(e:any) =>{
@@ -66,7 +64,7 @@ export default function EditProduct({id, name, category,
       toggle();
       setTimeout(() => {
         window.location.reload()
-      }, 200)
+      }, 600)
     } catch(error:any){
       console.error('ERROR: failed to send data to server.')
     }
@@ -98,7 +96,7 @@ export default function EditProduct({id, name, category,
     } finally {
       const cat = {value:0}
       for(let i =0; i< categories.length;i++){
-        if(categories[i].name == category){
+        if(categories[i].name == _category){
           cat.value = categories[i].id
         }
       }
@@ -122,7 +120,7 @@ export default function EditProduct({id, name, category,
         console.log(results)
         setTimeout(() => {
           window.location.reload()
-        }, 200)
+        }, 600)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }

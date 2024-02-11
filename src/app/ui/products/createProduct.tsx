@@ -91,7 +91,7 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
         console.log(results)
         setTimeout(() => {
           window.location.reload()
-        }, 200)
+        }, 600)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }
