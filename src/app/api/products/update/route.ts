@@ -13,7 +13,6 @@ export async function POST(req:Request){
     }
     const {name, description, price, category, picture_url, id} = await req.json()
     console.log(name, description, price, category, picture_url, id)
-
     try{
         const pictures = [picture_url, picture_url, picture_url]
         console.log(pictures)

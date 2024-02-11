@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import { Artisan } from "@/app/lib/definitions";
 
-export default function UploadImage({id}:{id:string}){
+export default function UploadImage({id, required}:{id:string, required:Boolean}){
     const [selectedImage, setSelectedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [uploadError, setUploadError] = useState();
@@ -14,7 +14,8 @@ export default function UploadImage({id}:{id:string}){
     };
     return (
         <>
-            <input name='image' id='uploaded-image' type="file" accept="image/*" onChange={handleImageChange} />
+            {required && <input name='image' id='uploaded-image' type="file" accept="image/*" onChange={handleImageChange} required/>}
+            {!required && <input name='image' id='uploaded-image' type="file" accept="image/*" onChange={handleImageChange}/>}
         </>
     )
 }

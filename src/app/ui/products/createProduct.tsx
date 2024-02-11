@@ -112,21 +112,21 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
         <div className='mb-6'>
 
           <h4 className='mb-2 h5'>Name</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={name} onChange={changeName}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={name} onChange={changeName} required/>
 
         </div>
 
         <div className='mb-6'>
 
           <h4 className='mb-2 h5'>Description</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={description} onChange={changeDescription}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={description} onChange={changeDescription} required/>
 
         </div>
 
         <div className='mb-6'>
 
           <h4 className='mb-2 h5'>Price</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={price} onChange={changePrice}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={price} onChange={changePrice} required/>
 
         </div>
 
@@ -138,7 +138,7 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
               return (
               <label className="flex items-center gap-x-1" key={`categoryLabel${item.id}`}>
 
-                <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.id} type='radio' onChange={changeCategory}/>
+                <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.id} type='radio' onChange={changeCategory} required/>
 
                 <span>{item.name}</span>
 
@@ -150,7 +150,7 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
         </div>
 
         <div className="flex flex-col bg-white h-auto mx-auto mb-12">
-          <UploadImage id={id} />
+          <UploadImage id={id} required={true}/>
           {uploadedImageUrl && (
               <div className="h-20" >
                 <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
