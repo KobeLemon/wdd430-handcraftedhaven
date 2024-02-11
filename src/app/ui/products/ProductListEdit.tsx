@@ -3,16 +3,17 @@ import ProductCardEdit from "./ProductCardEdit";
 
 
 export default function ProductListEdit({ products, categories } : { products: Array<Product>, categories:Array<Category>}) {
-
+  console.log()
   return (
 
     <div className="w-full flex flex-wrap gap-5 justify-evenly">
 
       {
 
-        products.map( (product : Product) => (
+        products.map( (product : Product) => {
+          console.log(product.category)
 
-          <ProductCardEdit
+          return (<ProductCardEdit
 
             key={product.id}
 
@@ -36,7 +37,7 @@ export default function ProductListEdit({ products, categories } : { products: A
 
           />
 
-        ) )
+        ) })
 
       }
 

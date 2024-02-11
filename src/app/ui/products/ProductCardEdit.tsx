@@ -21,7 +21,7 @@ export default function ProductCardEdit({id, name, category, price, description,
 
   return (
     <>
-    {showEditProduct && <EditProduct id={parseInt(id)} name={name} category={category}
+    {showEditProduct && <EditProduct id={id} name={name} category={category}
     price={price} description={description} collection={collection} pictures={pictures} toggle={handleShowProduct} categories={categories}/>}
     <div className="relative flex flex-col items-start justify-center w-full md:w-auto">
       <Link href={`/products/${id}`}>
