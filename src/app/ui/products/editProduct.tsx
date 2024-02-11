@@ -53,6 +53,24 @@ export default function EditProduct({id, name, category,
     console.log(category)
   }
 
+  const handleDelete = async(e:any) =>{
+    try{
+      await fetch('/api/products/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({id:id})
+      })
+      toggle();
+      setTimeout(() => {
+        window.location.reload()
+      }, 200)
+    } catch(error:any){
+      console.error('ERROR: failed to send data to server.')
+    }
+  }
+
   const formSubmission = async(e:any) => {
     e.preventDefault()
     const input : HTMLInputElement | null = document.getElementById('uploaded-image') as HTMLInputElement;
@@ -135,7 +153,7 @@ export default function EditProduct({id, name, category,
                 </div>
             )}
         </div>
-
+        <button type="button" className='flex mx-auto' onClick={handleDelete}>Delete Product</button>
         <button className='flex mx-auto'>Save Product</button>
 
       </form>

@@ -88,6 +88,9 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
           body: JSON.stringify(data)
         })
         console.log(results)
+        setTimeout(() => {
+          window.location.reload()
+        }, 200)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }

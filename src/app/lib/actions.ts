@@ -15,6 +15,19 @@ import {
 
 export const runtime = 'edge'
 
+export async function deleteProductById(id:string){
+  try{
+    const query = {
+      text: `DELETE FROM handcraftedhavenproducts WHERE id = $1`,
+      values: [id]
+    }
+    sql.query(query)
+  }catch(error:any){
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
 export async function updateProductProperties(name:string, description:string, price:string, category:number, pictures:Array<string>, id:string|number){
   try {
     const query = {
