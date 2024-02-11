@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function Page({ params }: { params: { id: string } }) {
 	const id = params.id;
 	const products = await getProductsByArtisan(id);
-	const categories = await getCategories();
+	const categories = await getCategories()
 	const [artisan] = await Promise.all([
     getArtisanById(id),
   ]);
@@ -39,9 +39,10 @@ export default async function Page({ params }: { params: { id: string } }) {
 				collection=""
 
 			/>
+      
 			<div className="border-t-2 p-5 sm:p-10">
 				<h3 className="text-center mb-1 p-5">Your Products</h3>
-				<CreateProductButton id={parseInt(artisan.id)} collection={artisan.collection} categories={categories}/>
+				<CreateProductButton id={artisan.id} collection={artisan.collection} categories={categories}/>
 				<ProductListEdit products={products} categories={categories}/>
 			</div>
     </main>

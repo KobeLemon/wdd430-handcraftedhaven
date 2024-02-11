@@ -66,7 +66,7 @@ export default function ChangeImageContainer({id, handler}:{id:number, handler:a
             {uploadError && <div>{uploadError}</div>}
             {uploadedImageUrl && (
                 <div>
-                <img src={uploadedImageUrl} alt="Uploaded" className='absolute z-20' />
+                <Image src={uploadedImageUrl} width='200' height='200' alt="Uploaded" className='absolute z-20' />
                 </div>
             )}
         </div>

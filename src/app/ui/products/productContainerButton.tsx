@@ -5,7 +5,7 @@ import { Category } from "@/app/lib/definitions";
 
 
 
-export default function CreateProductButton({id, collection, categories}:{id:number, collection:string, categories:Array<Category>}){
+export default function CreateProductButton({id, collection, categories}:{id:string, collection:string, categories:Array<Category>}){
 
     const [showProductContainer, setShowProductContainer] = useState(false)
 

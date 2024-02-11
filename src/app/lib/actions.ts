@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+const { v4: uuidv4 } = require('uuid')
 import sharp from 'sharp';
 import { put } from "@vercel/blob";
 import { NextResponse } from 'next/server';
@@ -13,6 +14,19 @@ import {
   } from './definitions';
 
 export const runtime = 'edge'
+
+export async function deleteProductById(id:string){
+  try{
+    const query = {
+      text: `DELETE FROM handcraftedhavenproducts WHERE id = $1`,
+      values: [id]
+    }
+    sql.query(query)
+  }catch(error:any){
+    console.log('error occurred')
+    console.error(error)
+  }
+}
 
 export async function updateProductProperties(name:string, description:string, price:string, category:number, pictures:Array<string>, id:string|number){
   try {
@@ -29,6 +43,8 @@ export async function updateProductProperties(name:string, description:string, p
 
 export async function createProduct(name:string, description:string, price:string, category:number, collection:string, artisan_id:string|number, pictures:Array<string>){
   const product_id = crypto.randomUUID()
+  console.log(product_id)
+  console.log('STOP STOP STOP STOP')
 
   try {
     const query = {

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 
 
-export default function CreateProduct({id, collection, toggle, categories}:{id:number, collection:string, toggle: any, categories:Array<Category>}) {
+export default function CreateProduct({id, collection, toggle, categories}:{id:string, collection:string, toggle: any, categories:Array<Category>}) {
   console.log(collection)
   const [uploadError, setUploadError] = useState()
 
@@ -89,6 +89,9 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:n
           body: JSON.stringify(data)
         })
         console.log(results)
+        setTimeout(() => {
+          window.location.reload()
+        }, 200)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }
@@ -150,7 +153,7 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:n
           <UploadImage id={id} />
           {uploadedImageUrl && (
               <div className="h-20" >
-              <img src={uploadedImageUrl} alt="Uploaded" className='absolute z-20' />
+                <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
               </div>
           )}
         </div>

@@ -19,12 +19,12 @@ export const metadata: Metadata = {
 
 export default function EditProduct({id, name, category,
   price, description, collection, pictures, toggle, categories}:
-  {id:number, name:string, category:string, price:string, description:string, collection:string,
+  {id:string, name:string, category:string, price:string, description:string, collection:string,
     pictures:any, toggle:any, categories:Array<Category>}) {
   console.log(collection)
   const [uploadError, setUploadError] = useState()
 
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.medium);
 
   const [_name, setName] = useState(name)
 
@@ -45,10 +45,30 @@ export default function EditProduct({id, name, category,
   }
 
   const [_category, setCategory] = useState(category)
+  console.log(_category)
+  console.log(category)
 
   const changeCategory = (e:any) => {
     setCategory(e.target.value)
     console.log(category)
+  }
+
+  const handleDelete = async(e:any) =>{
+    try{
+      await fetch('/api/products/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({id:id})
+      })
+      toggle();
+      setTimeout(() => {
+        window.location.reload()
+      }, 200)
+    } catch(error:any){
+      console.error('ERROR: failed to send data to server.')
+    }
   }
 
   const formSubmission = async(e:any) => {
@@ -73,17 +93,23 @@ export default function EditProduct({id, name, category,
     } catch (error:any) {
         setUploadError(error.message);
     } finally {
+      const cat = {value:0}
+      for(let i =0; i< categories.length;i++){
+        if(categories[i].name == category){
+          cat.value = categories[i].id
+        }
+      }
+
       const data = {
-        name: name,
-        description: description,
-        price:price,
-        category:category,
+        id:id,
+        name: _name,
+        description: _description,
+        price:_price,
+        category:cat.value,
         picture_url: imageURL,
-        collection:collection,
-        artisan_id: id,
       }
       try{
-        const results = await fetch('/api/products/create', {
+        const results = await fetch('/api/products/update', {
           method:'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -106,88 +132,31 @@ export default function EditProduct({id, name, category,
 
       <form className="h-auto" onSubmit={formSubmission}>
         <h4>Name</h4>
-        <input name='name' type='text' value={name} onChange={changeName}/>
+        <input name='name' type='text' value={_name} onChange={changeName}/>
         <h4>Description</h4>
-        <input name='description' type='text' value={description} onChange={changeDescription}/>
+        <input name='description' type='text' value={_description} onChange={changeDescription}/>
         <h4>Price</h4>
-        <input name='price' type='text' value={price} onChange={changePrice}/>
+        <input name='price' type='text' value={_price} onChange={changePrice}/>
         <h4>Category</h4>
         <div className='flex flex-row flex-wrap mt-2 mb-3'>
           {categories.map((item:any) => {
-            return (
-            <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.id}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.id} type='radio' onChange={changeCategory}/>{item.name}</label>
-            )
+              return (
+              <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.name}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name}/>{item.name}</label>
+              )
           })}
         </div>
         <div className="flex flex-col bg-white h-auto mx-auto">
           <UploadImage id={id} />
           {uploadedImageUrl && (
                 <div className="h-20" >
-                <img src={uploadedImageUrl} alt="Uploaded" className='absolute z-20' />
+                <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
                 </div>
             )}
         </div>
-
-        <button>Create Product</button>
+        <button type="button" className='flex mx-auto' onClick={handleDelete}>Delete Product</button>
+        <button className='flex mx-auto'>Save Product</button>
 
       </form>
-
-      {/* <div className='flex flex-col gap-10 mb-20 md:flex-row'>
-
-        <div className='relative min-h-80 w-full rounded-xl overflow-hidden'>
-
-          <Image
-
-            className='object-cover'
-
-            src={product.pictures.big}
-
-            alt=""
-
-            fill
-
-          />
-
-        </div>
-
-        <div className='basis-1/2 shrink-0 md:px-5 md:py-2'>
-
-          <h1 className='h3 mb-1'>{ product.name }</h1>
-          <p className='mb-2'>By { product.artisan_name }</p>
-
-					<p className='text-dark-grayish-blue mb-5'>{ product.category_name }</p>
-
-
-          <p className='mb-8'>
-            { product.description }
-          </p>
-
-
-          <div className='mb-8 text-2xl font-bold'>
-
-            ${ product.price }
-
-          </div>
-					<div className='mb-5'>
-						<StarsRating rating={ product.rating} />
-					</div>
-
-          <CartQuantityButtons />
-
-        </div>
-
-      </div>
-
-      <div className='mb-20'>
-
-        <h2 className='h3'>Reviews</h2>
-
-        <ReviewsList reviews={reviews} />
-
-      </div>
-
-      <ReviewForm />
-      <Toaster /> */}
 
     </div>
 
