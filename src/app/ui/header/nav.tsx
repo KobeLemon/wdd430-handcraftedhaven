@@ -2,9 +2,36 @@
 import { useEffect, useState } from "react";
 import  {ShoppingCart , ShoppingCartProvider } from "@/app/ui/header/shopping-cart";
 import Search from "@/app/ui/header/search";
-import Profile from "@/app/ui/header/profile";
 import Logo from "@/app/ui/header/logo";
 import { Suspense } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+function AuthButton() {
+	const { data: session } = useSession();
+
+	if (session) {
+		console.log(session);
+		return (
+			<>
+				<div className="flex gap-5">
+					<button onClick={() => signOut()}>Sign Out</button>
+					<p>|</p>
+					<a href="/profile">Go to {session?.user?.name}&apos;s Profile</a>
+					<p>|</p>
+				</div>
+			</>
+		);
+	} else {
+		return (
+			<>
+				<div className="flex gap-5">
+					<button onClick={() => signIn() }>Sign In</button>
+					<p>|</p>
+				</div>
+			</>
+		);
+	}
+}
 
 export default function Nav() {
     const [cartData, setCartData] = useState<string | null>();
@@ -41,10 +68,10 @@ export default function Nav() {
                     <Search placeholder="Search Products"/>
                 </Suspense>
                 <div className="flex me-5 gap-5 justify-around md:me-10 md:gap-10">
-                    <Profile/>
+                    <AuthButton/>
                     <ShoppingCart/>
                 </div>
-                
+
             </nav>
         </header>
     )

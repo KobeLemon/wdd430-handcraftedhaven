@@ -11,9 +11,14 @@ import { unstable_noStore as noStore } from 'next/cache';
 export async function getUserByEmail(email:string) {
   noStore();
   try {
-    const user =
-      await sql`SELECT * FROM HandcraftedHavenUsers WHERE email=${email}`;
-    return user.rows[0] as User;
+		let response;
+    const user = await sql`SELECT email FROM HandcraftedHavenUsers WHERE email=${email}`;
+		if (user.rows.length > 0 ) {
+			response = user.rows[0] as User;
+		} else {
+			response = false;
+		}
+		return response;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -36,6 +41,7 @@ export async function getArtisanById(_id: string){
       throw new Error('Failed to fetch artisan.');
   }
 }
+
 
 export async function getProductById(_id: string){
   noStore();
@@ -175,10 +181,10 @@ export async function getProductsByArtisan(id: string){
   noStore();
   try {
       const products = await sql`
-			SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
-				FROM HandcraftedHavenProducts
-				LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
-				WHERE HandcraftedHavenProducts.artisan_id = ${id}`
+            SELECT HandcraftedHavenProducts.*, HandcraftedHavenCategories.name as category
+                FROM HandcraftedHavenProducts
+                LEFT JOIN HandcraftedHavenCategories ON HandcraftedHavenProducts.category = HandcraftedHavenCategories.id
+                WHERE HandcraftedHavenProducts.artisan_id = ${id}`
       const results = products.rows;
       const processed = results.map(item => {
         console.log(item)
@@ -249,7 +255,7 @@ export async function getArtisans(limit: number | null = null) {
 
       query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
     } else {
-      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) - 1 FROM HandcraftedHavenArtisans)`
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) FROM HandcraftedHavenArtisans)`
     }
 
     // const artisans = await query;

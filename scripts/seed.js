@@ -22,11 +22,11 @@ async function seedUsers(client) {
           password TEXT NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenUsers" table`);
 
       const insertedUsers = [];
-  
+
       // Insert data into the "users" table
       for(let i = 0; i < HandcraftedHavenUsers.length;i++){
         const user = HandcraftedHavenUsers[i]
@@ -37,9 +37,9 @@ async function seedUsers(client) {
           ON CONFLICT (email) DO NOTHING;
         `)
       }
-  
+
       console.log(`Seeded ${insertedUsers.length} users`);
-  
+
       return {
         createTable,
         users: insertedUsers,
@@ -63,7 +63,7 @@ async function seedArtisans(client) {
           pictures VARCHAR(500)[] NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenArtisans" table`);
       const insertedArtisans=[]
       // Insert data into the "users" table
@@ -76,9 +76,9 @@ async function seedArtisans(client) {
           ON CONFLICT (id) DO NOTHING;
         `);
       }
-  
+
       console.log(`Seeded ${insertedArtisans.length} artisans`);
-  
+
       return {
         createTable,
         artisans: insertedArtisans,
@@ -99,9 +99,9 @@ async function seedArtisans(client) {
           name VARCHAR(255) NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenCategories" table`);
-  
+
       // Insert data into the "users" table
       const insertedCategories = await Promise.all(
         HandcraftedHavenCategories.map(async (category) => {
@@ -114,7 +114,7 @@ async function seedArtisans(client) {
       );
 
       console.log(`Seeded ${insertedCategories.length} categories`);
-  
+
       return {
         createTable,
         categories: insertedCategories,
@@ -135,9 +135,9 @@ async function seedCollections(client) {
           name VARCHAR(255) NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenCollections" table`);
-  
+
       // Insert data into the "collections" table
       const insertedCollections = await Promise.all(
         HandcraftedHavenCollections.map(async (collection) => {
@@ -148,9 +148,9 @@ async function seedCollections(client) {
         `;
         }),
       );
-  
+
       console.log(`Seeded ${insertedCollections.length} collections`);
-  
+
       return {
         createTable,
         collections: insertedCollections,
@@ -178,9 +178,9 @@ async function seedCollections(client) {
           pictures VARCHAR(255)[] NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenProducts" table`);
-  
+
       // Insert data into the "users" table
       const insertedProducts = await Promise.all(
         HandcraftedHavenProducts.map(async (product) => {
@@ -192,9 +192,9 @@ async function seedCollections(client) {
         `;
         }),
       );
-  
+
       console.log(`Seeded ${insertedProducts.length} products`);
-  
+
       return {
         createTable,
         products: insertedProducts,
@@ -218,9 +218,9 @@ async function seedCollections(client) {
           rating INTEGER NOT NULL
         );
       `;
-  
+
       console.log(`Created "HandcraftedHavenReviews" table`);
-  
+
       // Insert data into the "collections" table
       const insertedReviews = await Promise.all(
         HandcraftedHavenReviews.map(async (review) => {
@@ -231,9 +231,9 @@ async function seedCollections(client) {
         `;
         }),
       );
-  
+
       console.log(`Seeded ${insertedReviews.length} reviews`);
-  
+
       return {
         createTable,
         reviews: insertedReviews,

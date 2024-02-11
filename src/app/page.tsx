@@ -10,7 +10,7 @@ import artThreeImage from '../../public/images/product-3.jpg';
 import artisanOneImage from '../../public/images/artisan-1.jpg';
 import artisanTwoImage from '../../public/images/artisan-2.jpg';
 import artisanThreeImage from '../../public/images/artisan-3.jpg';
-import { getArtisans, getXAmountTopProducts } from "./lib/data"
+import { getArtisans, getXAmountTopProducts, getUserByEmail } from "./lib/data"
 interface HeroData {
     header: string,
     subHeader: string
@@ -21,11 +21,9 @@ const heroData: HeroData = {
     subHeader: "Connecting Artisans with Connoisseurs"
 }
 
-
-
 // const productsCardData = [
 //     {
-//       href: "/products/1",  
+//       href: "/products/1",
 //       imageData: {
 //         src: artOneImage,
 //         alt: "Image 1",
@@ -34,7 +32,7 @@ const heroData: HeroData = {
 //       description: "Handcrafted Ceremonial Bull Clay Scuplture",
 //     },
 //     {
-//       href: "/products/2",  
+//       href: "/products/2",
 //       imageData: {
 //         src: artTwoImage,
 //         alt: "Image 2",
@@ -43,7 +41,7 @@ const heroData: HeroData = {
 //       description: "Handmade cement jar with wooden spoons.",
 //     },
 //     {
-//         href: "/products/3",  
+//         href: "/products/3",
 //         imageData: {
 //           src: artThreeImage,
 //           alt: "Image 3",
@@ -55,7 +53,7 @@ const heroData: HeroData = {
 
   const artisansCardData = [
     {
-      href: "/artisans/1",  
+      href: "/artisans/1",
       imageData: {
         src: artisanOneImage,
         alt: "Image 1",
@@ -64,7 +62,7 @@ const heroData: HeroData = {
       description: "Artisan since 2021",
     },
     {
-      href: "/artisans/2",  
+      href: "/artisans/2",
       imageData: {
         src: artisanTwoImage,
         alt: "Image 2",
@@ -73,7 +71,7 @@ const heroData: HeroData = {
       description: "Artisan since 2001",
     },
     {
-        href: "/artisans/3",  
+        href: "/artisans/3",
         imageData: {
           src: artisanThreeImage,
           alt: "Image 3",
@@ -85,10 +83,10 @@ const heroData: HeroData = {
 
 
 export default async function Page() {
-  
-    const productsCardData = await getXAmountTopProducts(3)
-    const artisansCardData = await getArtisans(3)
-   
+
+    const productsCardData = await getXAmountTopProducts(3);
+    const artisansCardData = await getArtisans(3);
+
     return (
         <>
             <HeroSection image={heroImage} header={heroData.header} subHeader={heroData.subHeader}/>
