@@ -136,7 +136,7 @@ export default function EditProduct({id, name, category,
             )}
         </div>
 
-        <button className='flex mx-auto'>Create Product</button>
+        <button className='flex mx-auto'>Save Product</button>
 
       </form>
 
