@@ -24,7 +24,7 @@ export default function EditProduct({id, name, category,
   console.log(collection)
   const [uploadError, setUploadError] = useState()
 
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.medium);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.big);
 
   const [_name, setName] = useState(name)
 
@@ -76,20 +76,22 @@ export default function EditProduct({id, name, category,
     const input : HTMLInputElement | null = document.getElementById('uploaded-image') as HTMLInputElement;
     const image : File | undefined = input?.files?.[0];
     const imageType = input.value.split('.')[input.value.split('.').length-1]
-    let imageURL:string = '/placeholder_large.webp';
     console.log(imageType)
-
+    let imageURL:string = pictures.big;
+    console.log(imageType)
     try {
-      const result = await fetch('/api/products/imageUpload', {
-      method: 'POST',
-      body: image,
-      headers: {
-          'Content-Type': `image/${imageType}`, // Set the Content-Type header to image/*
-      },
-    })
-      console.log(result)
-      imageURL = await result.text()
-      console.log(imageURL)
+      if(/(jpg|jpeg|png|gif|bmp)$/i.test(imageType) == true){
+        const result = await fetch('/api/products/imageUpload', {
+        method: 'POST',
+        body: image,
+        headers: {
+            'Content-Type': `image/${imageType}`, // Set the Content-Type header to image/*
+        },
+      })
+        console.log(result)
+        imageURL = await result.text()
+        console.log(imageURL)
+      }
     } catch (error:any) {
         setUploadError(error.message);
     } finally {
@@ -117,6 +119,9 @@ export default function EditProduct({id, name, category,
           body: JSON.stringify(data)
         })
         console.log(results)
+        setTimeout(() => {
+          window.location.reload()
+        }, 200)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }
@@ -132,21 +137,21 @@ export default function EditProduct({id, name, category,
 
       <form className="h-auto" onSubmit={formSubmission}>
         <h4>Name</h4>
-        <input name='name' type='text' value={_name} onChange={changeName}/>
+        <input name='name' type='text' value={_name} onChange={changeName} required/>
         <h4>Description</h4>
-        <input name='description' type='text' value={_description} onChange={changeDescription}/>
+        <input name='description' type='text' value={_description} onChange={changeDescription} required/>
         <h4>Price</h4>
-        <input name='price' type='text' value={_price} onChange={changePrice}/>
+        <input name='price' type='text' value={_price} onChange={changePrice} required/>
         <h4>Category</h4>
         <div className='flex flex-row flex-wrap mt-2 mb-3'>
           {categories.map((item:any) => {
               return (
-              <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.name}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name}/>{item.name}</label>
+              <label className="w-1/2 ml-1 sm:w-1/3 md:w-1/4 lg:w-auto lg:mr-1" key={`categoryLabel${item.name}`}><input className="mr-2 mb-1 mt-2" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name} required/>{item.name}</label>
               )
           })}
         </div>
         <div className="flex flex-col bg-white h-auto mx-auto">
-          <UploadImage id={id} />
+          <UploadImage id={id} required={false} />
           {uploadedImageUrl && (
                 <div className="h-20" >
                 <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
