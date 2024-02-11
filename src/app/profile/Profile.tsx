@@ -12,7 +12,7 @@ export default function Profile() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const user = await fetch('/api/getUser', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify('DannyRoberts-Littel@crafts.net')});
+				const user = await fetch('/api/getUser', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(session?.user?.email)});
 				const response = await user.json();
 				setisDataFetched({isSet: true});
 				setUserExists(response);
@@ -29,17 +29,22 @@ export default function Profile() {
 	let userName: string;
 	let userEmail: string;
 	let userImage = {small: "", medium: "", big: ""};
+	let userDescription = "";
+	let userID = "";
 
   if (
 		session && session.user
 		&& typeof session.user.name === 'string'
 		&& typeof session.user.email === 'string'
 		&& typeof session.user.image === 'string'
+		&& typeof userDescription === 'string'
+		&& typeof userID === 'string'
 		)
 		{
     userName = session.user.name;
 		userEmail = session.user.email;
 		userImage.big = session.user.image;
+
 
 		console.log(session);
 
@@ -47,12 +52,13 @@ export default function Profile() {
 
 			isDataFetched.isSet ?
 				userExists ?
+				// TODO Change this to Nathaniel's edit profile page
 					<h1 className='text-center pt-10'>User Exists</h1>
 				:
 				<AccountCreation
-					id=""
+					id={userID}
 					name={userName}
-					description=""
+					description={userDescription}
 					collection=""
 					pictures={userImage}
 					email={userEmail}
@@ -63,7 +69,7 @@ export default function Profile() {
 
 	} else {
 		return (
-			redirect('/')
+			window.location.href = "/"
 		)
 	}
 }

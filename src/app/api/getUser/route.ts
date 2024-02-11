@@ -2,13 +2,13 @@ import { getUserByEmail } from "../../lib/data";
 
 export async function POST(req:Request){
 	if(req.method !== 'POST'){
-			return new Response('',{
-					status:200,
-					statusText:'OK',
-					headers: {
-					'Content-Type': 'text/plain',
-					}
-			});
+		return new Response(JSON.stringify({ message: 'Method Not Allowed' }),{
+				status:500,
+				statusText:'Internal Server Error',
+				headers: {
+				'Content-Type': 'application/json',
+				}
+		});
 	}
 	const email = await req.json()
 
@@ -25,13 +25,13 @@ export async function POST(req:Request){
 			})
 
 	} catch(error){
-			console.error('Error requesting artisan profile:', error);
-			return new Response('',{
-					status:500,
-					statusText:'INTERNAL SERVER ERROR',
-					headers: {
-					'Content-Type': 'text/plain',
-					}
-			})
+		console.error('Error creating product profile:', error);
+		return new Response(JSON.stringify({ message: 'Product failed to be created.' }),{
+				status:500,
+				statusText:'INTERNAL SERVER ERROR',
+				headers: {
+				'Content-Type': 'application/json',
+				}
+		})
 	}
 }

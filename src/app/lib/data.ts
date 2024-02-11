@@ -11,7 +11,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 export async function getUserByEmail(email:string) {
   noStore();
   try {
-		let response
+		let response;
     const user = await sql`SELECT email FROM HandcraftedHavenUsers WHERE email=${email}`;
 		if (user.rows.length > 0 ) {
 			response = user.rows[0] as User;
@@ -237,7 +237,7 @@ export async function getArtisans(limit: number | null = null) {
 
       query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT ${limit}`;
     } else {
-      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) - 1 FROM HandcraftedHavenArtisans)`
+      query = await sql`SELECT * FROM HandcraftedHavenArtisans LIMIT (SELECT COUNT(*) FROM HandcraftedHavenArtisans)`
     }
 
     // const artisans = await query;

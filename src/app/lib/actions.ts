@@ -14,7 +14,6 @@ import {
 
 export const runtime = 'edge'
 
-
 export async function insertUserAndArtisan(user: User, artisan: Artisan, collection: Collection){
     const result = {value: {rows:[{nextval:''}]}};
     const id = {value: ''};
@@ -49,8 +48,8 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
         };
     }
     try{
-        const pictureArray: string = `{"${artisan.pictures.small}","${artisan.pictures.medium}","${artisan.pictures.big}"}`
-        await sql`
+			const pictureArray: string = `${artisan.pictures.small},${artisan.pictures.medium},${artisan.pictures.big}`
+      await sql`
         INSERT INTO HandcraftedHavenArtisans (id, name, description, collection, pictures)
         VALUES (${id.value}, ${artisan.name}, ${artisan.description}, ${artisan.collection}, ARRAY[${pictureArray}])
         `

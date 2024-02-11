@@ -30,7 +30,13 @@ const nextConfig = {
         protocol:"https",
         hostname: "s4v7372ik6wn7j5n.public.blob.vercel-storage.com",
         port: "",
-      }
+      },
+			{
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        // pathname: '/my-bucket/**',
+      },
     ],
   },
 };
