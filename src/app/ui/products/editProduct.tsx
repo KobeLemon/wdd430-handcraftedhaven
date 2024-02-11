@@ -11,6 +11,7 @@ import { MouseEventHandler, useState } from 'react';
 import UploadImage from './uploadImage';
 import { Category, Product } from '@/app/lib/definitions';
 import { XCircleIcon } from '@heroicons/react/16/solid';
+import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Product',
@@ -23,6 +24,8 @@ export default function EditProduct({id, name, category,
   {id:string, name:string, category:string, price:string, description:string, collection:string,
     pictures:any, toggle:any, categories:Array<Category>}) {
   console.log(collection)
+
+  const router = useRouter();
   const [uploadError, setUploadError] = useState()
 
   const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.big);
@@ -62,9 +65,6 @@ export default function EditProduct({id, name, category,
         body:JSON.stringify({id:id})
       })
       toggle();
-      setTimeout(() => {
-        window.location.reload()
-      }, 600)
     } catch(error:any){
       console.error('ERROR: failed to send data to server.')
     }
@@ -118,9 +118,6 @@ export default function EditProduct({id, name, category,
           body: JSON.stringify(data)
         })
         console.log(results)
-        setTimeout(() => {
-          window.location.reload()
-        }, 600)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }

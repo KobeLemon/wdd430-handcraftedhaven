@@ -11,6 +11,7 @@ import { MouseEventHandler, useState } from 'react';
 import UploadImage from './uploadImage';
 import { Category } from '@/app/lib/definitions';
 import { XCircleIcon } from '@heroicons/react/16/solid';
+import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Product',
@@ -48,6 +49,8 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
     setCategory(e.target.value)
     console.log(category)
   }
+
+  const router = useRouter()
 
   const formSubmission = async(e:any) => {
     e.preventDefault()
@@ -89,9 +92,6 @@ export default function CreateProduct({id, collection, toggle, categories}:{id:s
           body: JSON.stringify(data)
         })
         console.log(results)
-        setTimeout(() => {
-          window.location.reload()
-        }, 600)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }
