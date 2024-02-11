@@ -25,7 +25,7 @@ export default function EditProduct({id, name, category,
   console.log(collection)
   const [uploadError, setUploadError] = useState()
 
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.medium);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(pictures.big);
 
   const [_name, setName] = useState(name)
 
@@ -77,20 +77,22 @@ export default function EditProduct({id, name, category,
     const input : HTMLInputElement | null = document.getElementById('uploaded-image') as HTMLInputElement;
     const image : File | undefined = input?.files?.[0];
     const imageType = input.value.split('.')[input.value.split('.').length-1]
-    let imageURL:string = '/placeholder_large.webp';
     console.log(imageType)
-
+    let imageURL:string = pictures.big;
+    console.log(imageType)
     try {
-      const result = await fetch('/api/products/imageUpload', {
-      method: 'POST',
-      body: image,
-      headers: {
-          'Content-Type': `image/${imageType}`, // Set the Content-Type header to image/*
-      },
-    })
-      console.log(result)
-      imageURL = await result.text()
-      console.log(imageURL)
+      if(/(jpg|jpeg|png|gif|bmp)$/i.test(imageType) == true){
+        const result = await fetch('/api/products/imageUpload', {
+        method: 'POST',
+        body: image,
+        headers: {
+            'Content-Type': `image/${imageType}`, // Set the Content-Type header to image/*
+        },
+      })
+        console.log(result)
+        imageURL = await result.text()
+        console.log(imageURL)
+      }
     } catch (error:any) {
         setUploadError(error.message);
     } finally {
@@ -118,6 +120,9 @@ export default function EditProduct({id, name, category,
           body: JSON.stringify(data)
         })
         console.log(results)
+        setTimeout(() => {
+          window.location.reload()
+        }, 200)
       }catch(error:any){
         console.error({message:'Error: could not send new product data.'})
       }
@@ -137,17 +142,17 @@ export default function EditProduct({id, name, category,
 
         <div className='mb-6'>
           <h4 className='mb-2 h5'>Name</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={_name} onChange={changeName}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='name' type='text' value={_name} onChange={changeName} required/>
         </div>
 
         <div className='mb-6'>
           <h4 className='mb-2 h5'>Description</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={_description} onChange={changeDescription}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='description' type='text' value={_description} onChange={changeDescription} required/>
         </div>
 
         <div className='mb-6'>
           <h4 className='mb-2 h5'>Price</h4>
-          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={_price} onChange={changePrice}/>
+          <input className='w-full focus:ring-orange focus:border-orange' name='price' type='text' value={_price} onChange={changePrice} required/>
         </div>
 
         <div className='mb-6'>
@@ -156,7 +161,7 @@ export default function EditProduct({id, name, category,
             {categories.map((item:any) => {
                 return (
                 <label className="flex items-center gap-x-1" key={`categoryLabel${item.name}`}>
-                  <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name}/>
+                  <input className="checked:text-orange checked:ring-orange" name='category' key={`category${item.id}`} value={item.name} type='radio' onChange={changeCategory} checked={_category==item.name} required/>
                   <span>{item.name}</span>
                 </label>
                 )
@@ -170,13 +175,14 @@ export default function EditProduct({id, name, category,
 
             <div className='bg-white mb-2'>
 
-              <UploadImage id={id} />
+              <UploadImage id={id} required={false} />
 
             </div>
 
             {uploadedImageUrl && (
 
               <div className="h-20" >
+                
                 <Image src={uploadedImageUrl} width='100' height='100' alt="Uploaded" className='absolute z-20' />
               </div>
 
