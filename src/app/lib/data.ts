@@ -12,7 +12,7 @@ export async function getUserByEmail(email:string) {
   noStore();
   try {
 		let response;
-    const user = await sql`SELECT email FROM HandcraftedHavenUsers WHERE email=${email}`;
+    const user = await sql`SELECT id, email FROM HandcraftedHavenUsers WHERE email=${email}`;
 		if (user.rows.length > 0 ) {
 			response = user.rows[0] as User;
 		} else {
