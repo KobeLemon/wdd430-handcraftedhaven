@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   title: 'User Profile',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params }: { params: { id: string } }) {
 	const id = params.id;
 	const products = await getProductsByArtisan(id);
