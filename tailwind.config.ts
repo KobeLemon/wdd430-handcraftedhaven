@@ -26,7 +26,7 @@ const config: Config = {
 
       'black': 'hsl(0, 0%, 0%)',
 
-      'transparent': 'hsl(0, 0%, 100% / 0)'
+      'transparent': 'rgba(0, 0, 0, 0)'
 
     },
 

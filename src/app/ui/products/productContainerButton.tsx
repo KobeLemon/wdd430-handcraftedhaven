@@ -15,10 +15,10 @@ export default function CreateProductButton({id, collection, categories}:{id:num
 	  };
 
     return (
-        <>
-        <button className='flex artisan-edit-button mx-auto'
-		onClick={handleShowProductContainer}>New Product +</button>
-        {showProductContainer && <CreateProduct id={id} collection={collection} toggle={handleShowProductContainer} categories={categories}/>}
-        </>
+        <div className="mb-10 text-right">
+            <button className='px-8 py-2 bg-orange text-black font-bold rounded-md'
+            onClick={handleShowProductContainer}>Add Product</button>
+            {showProductContainer && <CreateProduct id={id} collection={collection} toggle={handleShowProductContainer} categories={categories}/>}
+        </div>
     )
 }

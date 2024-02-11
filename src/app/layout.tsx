@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-[4rem_1fr] grid-rows-[5rem_1fr] md:flex-row md:overflow-hidden md:grid-cols-[6rem_1fr] lg:grid-cols-[10rem_1fr]`}>
+      <body className={`${kumbhSans.className} antialiased max-w-[1400px] mx-auto grid h-screen grid-cols-[4rem_1fr] grid-rows-[5rem_1fr] md:flex-row md:overflow-hidden md:grid-cols-[6rem_1fr] lg:grid-cols-[10rem_1fr]`}>
       <ShoppingCartProvider>
           <Nav />
           <SideNav />
