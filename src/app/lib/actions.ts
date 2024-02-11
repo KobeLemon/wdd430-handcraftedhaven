@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+const { v4: uuidv4 } = require('uuid')
 import sharp from 'sharp';
 import { put } from "@vercel/blob";
 import { NextResponse } from 'next/server';
@@ -14,6 +15,77 @@ import {
 
 export const runtime = 'edge'
 
+export async function deleteProductById(id:string){
+  try{
+    const query = {
+      text: `DELETE FROM handcraftedhavenproducts WHERE id = $1`,
+      values: [id]
+    }
+    sql.query(query)
+  }catch(error:any){
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
+export async function updateProductProperties(name:string, description:string, price:string, category:number, pictures:Array<string>, id:string|number){
+  try {
+    const query = {
+      text: `UPDATE handcraftedhavenproducts SET name = $1, description = $2, price= $3, category = $4, pictures = $5 WHERE id= $6`,
+      values: [name, description, price, category, pictures, id]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
+export async function createProduct(name:string, description:string, price:string, category:number, collection:string, artisan_id:string|number, pictures:Array<string>){
+  const product_id = crypto.randomUUID()
+  console.log(product_id)
+  console.log('STOP STOP STOP STOP')
+
+  try {
+    const query = {
+      text: `
+      INSERT INTO HandcraftedHavenProducts (id, name, description, price, rating, category, collection, artisan_id, pictures)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+    `,
+      values: [product_id, name, description, price, 0, category, collection, artisan_id, pictures]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
+export async function updateArtisanProperties(name:string, description:string, pictures:Array<string>, id:string|number){
+  try {
+    const query = {
+      text: `UPDATE handcraftedhavenartisans SET name = $1, description = $2, pictures = $3 WHERE id= $4`,
+      values: [name, description, pictures, id]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
+
+export async function changeArtisanImage(value:Array<string>, id:number){
+  try {
+    const query = {
+      text: `UPDATE handcraftedhavenartisans SET pictures = $1 WHERE id= $2`,
+      values: [value, id]
+    }
+    sql.query(query)
+  } catch(error) {
+    console.log('error occurred')
+    console.error(error)
+  }
+}
 
 export async function insertUserAndArtisan(user: User, artisan: Artisan, collection: Collection){
     const result = {value: {rows:[{nextval:''}]}};
@@ -70,45 +142,3 @@ export async function insertUserAndArtisan(user: User, artisan: Artisan, collect
         };
     }
   }
-
-
-
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 10)
-
-export async function POST(req: Request) {
-    const file = req.body || ''
-
-    const imageBuffer = Buffer.from(file.toString(), 'base64');
-
-    const contentType = req.headers.get('content-type') || 'text/plain'
-    const filename = `${nanoid()}.${contentType.split('/')[1]}`
-    const blob = await put(filename, file, {
-        contentType,
-        access: 'public',
-    })
-    return NextResponse.json(blob)
-}
-
-
-function generateUUID() : string{
-    return crypto.randomUUID();
-}
-
-function uploadImage(element: string){
-    const input = document.querySelector(element) as HTMLInputElement;
-    const file = input.files ? input.files[0] : null;
-    if (file){
-
-    }
-}
-
-
-async function resizeImage(inputImagePath: string, outputImagePath: string, width: number, height: number): Promise<void> {
-    try{
-        await sharp(inputImagePath)
-        .resize(width)
-        .toFile(outputImagePath)
-    }catch (error:any){
-        console.error('Error Resizing Image:', error.message);
-    }
-}
