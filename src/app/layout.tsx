@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
 
-      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-[4rem_1fr] grid-rows-[5rem_1fr] md:flex-row md:overflow-hidden md:grid-cols-[6rem_1fr] lg:grid-cols-[10rem_1fr]`}>
+      <body className={`${kumbhSans.className} antialiased grid h-screen grid-cols-[4rem_1fr] grid-rows-[5rem_1fr] md:flex-row md:overflow-hidden md:grid-cols-[6rem_1fr] lg:grid-cols-[10rem_1fr] max-w-[1440px] mx-auto`}>
       <SessionProvider session={session}>
 				<ShoppingCartProvider>
 						<Nav />
